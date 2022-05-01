@@ -20,6 +20,10 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: [true, '貼文內容為必填']
     },
+    photo: {
+      type: String,
+      default: ''
+    },
     likes: {
       type: Number,
       default: 0
