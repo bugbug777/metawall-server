@@ -4,11 +4,21 @@ const Post = require('../models/PostModel');
 
 // 取得所有貼文
 router.get('/', async (req, res) => {
-  const posts = await Post.find();
-  res.json({
-    status: 'success',
-    data: posts
-  })
+  const { sort, keyword } = req.query;
+  const regex = new RegExp(keyword);
+  const posts = await Post.find({ name: regex}).sort({ createdAt: sort });
+  console.log(posts);
+  if (posts.length > 0 ) {
+    res.json({
+      status: 'success',
+      data: posts
+    })
+  } else {
+    res.status(400).json({
+      status: 'false',
+      message: '找不到相關資料！'
+    })
+  }
 });
 
 // 取得單筆貼文
