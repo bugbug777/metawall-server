@@ -12,9 +12,9 @@ const postSchema = new mongoose.Schema(
       type: String,
       enum: ['person', 'group']
     },
-    name: {
-      type: String,
-      required: [true, '使用者名稱為必填']
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User'
     },
     content: {
       type: String,

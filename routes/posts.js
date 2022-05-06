@@ -6,8 +6,11 @@ const Post = require('../models/PostModel');
 router.get('/', async (req, res) => {
   const { sort, keyword } = req.query;
   const regex = new RegExp(keyword);
-  const posts = await Post.find({ name: regex}).sort({ createdAt: sort });
-  console.log(posts);
+  const posts = await Post.find({ name: regex}).populate(
+    {
+      path: 'user',
+      select: 'name'
+    }).sort({ createdAt: sort });
   if (posts.length > 0 ) {
     res.json({
       status: 'success',
@@ -25,7 +28,11 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const post = await Post.findById(id);
+    const post = await Post.findById(id).populate(
+      {
+        path: 'user',
+        select: 'name'
+      });
     if (post !== null) {
       res.json({
         status: 'success',
@@ -48,10 +55,10 @@ router.get('/:id', async (req, res) => {
 // 新增單筆貼文
 router.post('/', async (req, res) => {
   try {
-    const { name, content, photo } = req.body;
+    const { user, content, photo } = req.body;
     if (content) {
       const newPost = await Post.create({
-        name,
+        user,
         content,
         photo
       })
