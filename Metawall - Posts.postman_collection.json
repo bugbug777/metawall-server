@@ -1,0 +1,64 @@
+{
+	"info": {
+		"_postman_id": "3b88f441-f8a3-47f4-b7de-04ee9b0e14b8",
+		"name": "Metawall - Posts",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "取得所有貼文",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HEROKU_META}}/posts",
+					"host": [
+						"{{HEROKU_META}}"
+					],
+					"path": [
+						"posts"
+					],
+					"query": [
+						{
+							"key": "keyword",
+							"value": "測試",
+							"disabled": true
+						},
+						{
+							"key": "sort",
+							"value": "-1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "新增一筆貼文",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tags\": [\"心情\"],\n    \"user\": \"6279717faf641c504afca5e0\",\n    \"content\": \"Do something great\",\n    \"photo\": \"https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80\",\n    \"likes\": 10,\n    \"comments\": 10\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HEROKU_META}}/posts",
+					"host": [
+						"{{HEROKU_META}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
