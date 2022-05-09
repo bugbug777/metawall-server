@@ -4,22 +4,22 @@ const Post = require('../models/PostModel');
 
 // 取得所有貼文
 router.get('/', async (req, res) => {
-  const { sort, keyword } = req.query;
+  const { sort=-1, keyword } = req.query;
   const regex = new RegExp(keyword);
-  const posts = await Post.find({ name: regex}).populate(
-    {
-      path: 'user',
-      select: 'name'
-    }).sort({ createdAt: sort });
-  if (posts.length > 0 ) {
-    res.json({
-      status: 'success',
-      data: posts
-    })
-  } else {
+  try {
+    const posts = await Post.find({ content: regex}).populate(
+      {
+        path: 'user',
+        select: 'name'
+      }).sort({ createdAt: sort });
+      res.json({
+        status: 'success',
+        data: posts
+      })
+  } catch (error) {
     res.status(400).json({
       status: 'false',
-      message: '找不到相關資料！'
+      message: '找不到相關資料'
     })
   }
 });
