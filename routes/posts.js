@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const Post = require('../models/PostModel');
+const appError = require('../service/appError');
 
 // 取得所有貼文
 router.get('/', async (req, res) => {
@@ -53,30 +54,20 @@ router.get('/:id', async (req, res) => {
 });
 
 // 新增單筆貼文
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
   try {
     const { user, content, photo } = req.body;
-    if (content) {
-      const newPost = await Post.create({
-        user,
-        content,
-        photo
-      })
-      res.json({
-        status: 'success',
-        data: newPost
-      })
-    } else {
-      res.status(400).json({
-        status: 'false',
-        message: '貼文內容為必填！'
-      })
-    }
-  } catch (error) {
-    res.status(400).json({
-      status: 'false',
-      message: error.message
+    const newPost = await Post.create({
+      user,
+      content,
+      photo
     })
+    res.json({
+      status: 'success',
+      data: newPost
+    })
+  } catch (err) {
+    next(err);
   }
 });
 

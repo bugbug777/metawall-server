@@ -50,8 +50,36 @@ app.use((req, res, next) => {
 });
 // Express programming error
 app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).send('程式出現異常，請聯絡管理員！');
+  err.statusCode = err.statusCode || 500
+
+  // Development
+  if (process.env.NODE_ENV === 'development') {
+    res.status(err.statusCode).json({
+      errorName: err.name,
+      statusCode: err.statusCode,
+      error: err
+    });
+  }
+
+  // Production
+  if (process.env.NODE_ENV === 'production') {
+    // 針對 Mongoose validator errors 進行客製化
+    if (err.name === 'ValidationError') {
+      err.message = '欄位未填寫正確，請重新輸入！';
+      err.isOperational = true;
+    }
+    if (err.isOperational) {
+      res.status(400).json({
+        message: err.message
+      })
+    } else {
+      console.error('重大系統錯誤！！', err);
+      res.status(500).json({
+        status: 'error',
+        message: '系統發生問題，請聯繫管理員！'
+      })
+    }
+  }
 })
 
 module.exports = app;
