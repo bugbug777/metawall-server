@@ -59,6 +59,36 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "取得單一貼文",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HEROKU_META}}/posts/628469c5a8c980791d433482",
+					"host": [
+						"{{HEROKU_META}}"
+					],
+					"path": [
+						"posts",
+						"628469c5a8c980791d433482"
+					],
+					"query": [
+						{
+							"key": "keyword",
+							"value": "測試",
+							"disabled": true
+						},
+						{
+							"key": "sort",
+							"value": "-1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
