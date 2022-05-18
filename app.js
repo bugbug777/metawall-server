@@ -69,7 +69,7 @@ app.use((err, req, res, next) => {
       err.isOperational = true;
     }
     if (err.name === 'CastError') {
-      err.message = '找不到該筆資料';
+      err.message = '找不到該筆資料！';
       err.isOperational = true;
     }
     if (err.isOperational) {
