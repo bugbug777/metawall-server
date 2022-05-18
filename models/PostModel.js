@@ -14,7 +14,8 @@ const postSchema = new mongoose.Schema(
     },
     user: {
       type: mongoose.Schema.ObjectId,
-      ref: 'User'
+      ref: 'User',
+      required: [true, '貼文者 id 為必要欄位']
     },
     content: {
       type: String,
