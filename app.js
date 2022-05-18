@@ -28,7 +28,7 @@ process.on('uncaughtException', (err, origin) => {
 });
 // Unhandled Rejection
 process.on('unhandledRejection', (err, promise) => {
-  console.error('Reason：', err);
+  console.error('Unhandled reason：', err);
   console.error('Unhandled rejection：', promise);
 });
 
@@ -68,8 +68,13 @@ app.use((err, req, res, next) => {
       err.message = '欄位未填寫正確，請重新輸入！';
       err.isOperational = true;
     }
+    if (err.name === 'CastError') {
+      err.message = '找不到該筆資料';
+      err.isOperational = true;
+    }
     if (err.isOperational) {
       res.status(400).json({
+        status: 'false',
         message: err.message
       })
     } else {
