@@ -72,6 +72,10 @@ app.use((err, req, res, next) => {
       err.message = '找不到該筆資料！';
       err.isOperational = true;
     }
+    if (err.name === 'SyntaxError') {
+      err.message = '請輸入正確的資料格式！';
+      err.isOperational = true;
+    }
     if (err.isOperational) {
       res.status(400).json({
         status: 'false',
