@@ -46,7 +46,10 @@ app.use('/posts', postsRouter);
 
 // No matched path
 app.use((req, res, next) => {
-  res.status(404).send('Page is not found!')
+  res.status(404).json({
+    status: 'false',
+    message: '該頁面不存在！'
+  })
 });
 // Express programming error
 app.use((err, req, res, next) => {
