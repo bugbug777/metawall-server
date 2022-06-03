@@ -28,12 +28,11 @@ router.get('/:id', asyncErrorHandler(async (req, res, next) => {
       path: 'user',
       select: 'name'
     });
-  if (post !== null) {
-    res.json({
-      status: 'success',
-      data: post
-    })
-  }
+  if (!post) appError(400, '該貼文不存在！', next);
+  res.json({
+    status: 'success',
+    data: post
+  })
 }));
 
 // 新增單筆貼文
