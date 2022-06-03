@@ -17,7 +17,7 @@ router.get('/', asyncErrorHandler(async (req, res) => {
     res.json({
       status: 'success',
       data: posts
-    })
+    });
 }));
 
 // 取得單筆貼文
@@ -32,7 +32,7 @@ router.get('/:id', asyncErrorHandler(async (req, res, next) => {
   res.json({
     status: 'success',
     data: post
-  })
+  });
 }));
 
 // 新增單筆貼文
@@ -45,11 +45,21 @@ router.post('/', asyncErrorHandler(async (req, res, next) => {
     user,
     content,
     photo
-  })
+  });
   res.json({
     status: 'success',
     data: newPost
+  });
+}));
+
+// 刪除所有貼文
+router.delete('/', asyncErrorHandler(async (req, res) => {
+  await Post.deleteMany({});
+  res.json({
+    status: 'success',
+    data: []
   })
+  
 }));
 
 module.exports = router;
