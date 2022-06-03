@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const Post = require('../models/PostModel');
+const User = require('../models/UserModel');
+const appError = require('../service/appError');
 const asyncErrorHandler = require('../service/asyncErrorHandler');
 
 // 取得所有貼文
@@ -36,7 +38,10 @@ router.get('/:id', asyncErrorHandler(async (req, res, next) => {
 
 // 新增單筆貼文
 router.post('/', asyncErrorHandler(async (req, res, next) => {
-  const { user, content, photo } = req.body;
+  const { userId, content, photo } = req.body;
+  const user = await User.findById(userId).exec();
+
+  if (!user) appError(400, '此用戶不存在！', next);
   const newPost = await Post.create({
     user,
     content,
