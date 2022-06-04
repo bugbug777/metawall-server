@@ -52,6 +52,21 @@ router.post('/', asyncErrorHandler(async (req, res, next) => {
   });
 }));
 
+// 編輯單筆貼文
+router.patch('/:id', asyncErrorHandler(async (req, res, next) => {
+  const { id } = req.params;
+  const post = await Post.findById(id).populate(
+    {
+      path: 'user',
+      select: 'name'
+    });
+  if (!post) appError(400, '該貼文不存在！', next);
+  res.json({
+    status: 'success',
+    data: post
+  });
+}));
+
 // 刪除所有貼文
 router.delete('/', asyncErrorHandler(async (req, res) => {
   await Post.deleteMany({});
