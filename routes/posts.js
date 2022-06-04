@@ -28,7 +28,7 @@ router.get('/:id', asyncErrorHandler(async (req, res, next) => {
       path: 'user',
       select: 'name'
     });
-  if (!post) appError(400, '該貼文不存在！', next);
+  if (!post) return appError(400, '該貼文不存在！', next);
   res.json({
     status: 'success',
     data: post
@@ -40,7 +40,7 @@ router.post('/', asyncErrorHandler(async (req, res, next) => {
   const { user, content, photo } = req.body;
   const isFound = await User.findById(user).exec();
 
-  if (!isFound) appError(400, '此用戶不存在！', next);
+  if (!isFound) return appError(400, '此用戶不存在！', next);
   const newPost = await Post.create({
     user,
     content,
@@ -60,7 +60,7 @@ router.patch('/:id', asyncErrorHandler(async (req, res, next) => {
       path: 'user',
       select: 'name'
     });
-  if (!post) appError(400, '該貼文不存在！', next);
+  if (!post) return appError(400, '該貼文不存在！', next);
   res.json({
     status: 'success',
     data: post
