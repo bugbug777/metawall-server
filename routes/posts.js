@@ -55,15 +55,21 @@ router.post('/', asyncErrorHandler(async (req, res, next) => {
 // 編輯單筆貼文
 router.patch('/:id', asyncErrorHandler(async (req, res, next) => {
   const { id } = req.params;
-  const post = await Post.findById(id).populate(
-    {
-      path: 'user',
-      select: 'name'
-    });
+  const { content } = req.body
+  
+  if (!content) return appError(400, '貼文修改能容不能為空！');
+  const post = await Post.findById(id);
+
   if (!post) return appError(400, '該貼文不存在！', next);
+  const editedPost = await Post.findOneAndUpdate(
+    id,
+    { content },
+    {new: true}
+  )
+
   res.json({
     status: 'success',
-    data: post
+    data: editedPost
   });
 }));
 
