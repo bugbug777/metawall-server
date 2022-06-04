@@ -37,10 +37,10 @@ router.get('/:id', asyncErrorHandler(async (req, res, next) => {
 
 // 新增單筆貼文
 router.post('/', asyncErrorHandler(async (req, res, next) => {
-  const { userId, content, photo } = req.body;
-  const user = await User.findById(userId).exec();
+  const { user, content, photo } = req.body;
+  const isFound = await User.findById(user).exec();
 
-  if (!user) appError(400, '此用戶不存在！', next);
+  if (!isFound) appError(400, '此用戶不存在！', next);
   const newPost = await Post.create({
     user,
     content,
