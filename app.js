@@ -9,6 +9,7 @@ var dotenv = require('dotenv').config();
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var postsRouter = require('./routes/posts');
+var uploadRouter = require('./routes/upload');
 
 // Connect to mongoDB
 const uri = process.env.DB_PATH.replace(
@@ -43,6 +44,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
+app.use('/upload', uploadRouter);
 
 // No matched path
 app.use((req, res, next) => {
@@ -61,6 +63,7 @@ app.use((err, req, res, next) => {
       errorName: err.name,
       statusCode: err.statusCode,
       message: err.message,
+      stacks: err.stack,
       error: err
     });
   }

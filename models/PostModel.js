@@ -2,16 +2,6 @@ const mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema(
   {
-    tags: [
-      {
-        type: String,
-        required: [true, '貼文標籤不能為空 ']
-      }
-    ],
-    type: {
-      type: String,
-      enum: ['person', 'group']
-    },
     user: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
@@ -25,23 +15,30 @@ const postSchema = new mongoose.Schema(
       type: String,
       default: ''
     },
-    likes: {
-      type: Number,
-      default: 0
-    },
-    comments: {
-      type: Number,
-      default: 0
-    },
+    likes: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User'
+      }
+    ],
     createdAt: {
       type: Date,
       default: Date.now,
     },
   },
   {
-    versionKey: false
+    versionKey: false,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
   }
 );
+
+// 虛擬欄位
+postSchema.virtual('comments', {
+  ref: 'Comment',
+  localField: '_id',
+  foreignField: 'post'
+})
 
 const PostModel = mongoose.model('Post', postSchema);
 
