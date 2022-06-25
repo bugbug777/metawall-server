@@ -33,7 +33,9 @@ const signUp = asyncErrorHandler(async (req, res, next) => {
 
   if (!name || !email || !password) return appError(400, '欄位資訊不能為空！', next);
   if (!validator.isAlphanumeric(name)) return appError(400, '名稱只能是英數字的組合！', next);
+  if (!validator.isLength(name, { min: 2 })) return appError(400, '使用者暱稱長度必須為 2 個字元以上！', next);
   if (!validator.isEmail(email)) return appError(400, 'Email 格式不符合！', next);
+  if (!validator.isAlphanumeric(password)) return appError(400, '密碼只能是英數字的組合！', next);
   if (!validator.isLength(password, { min: 8, max: 16 })) return appError(400, '密碼長度只能介於 8 到 16 碼！', next);
 
   const isRegistered = await User.findOne({email: email});
@@ -109,7 +111,7 @@ const updateProfile = asyncErrorHandler(async (req, res, next) => {
   const editedUser = await User.findByIdAndUpdate(
     { _id: req.user._id },
     { name, gender, avatar },
-    { new: true }
+    { new: true, runValidators: true }
   );
 
   successHandler(res, editedUser);
