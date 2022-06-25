@@ -3,6 +3,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-output.json');
 
 var usersRouter = require('./routes/users');
 var postsRouter = require('./routes/posts');
@@ -10,6 +12,7 @@ var uploadRouter = require('./routes/upload');
 
 require('./connections/mongoose');
 require('./connections/passport');
+
 
 var app = express();
 
@@ -32,9 +35,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/users', usersRouter);
-app.use('/posts', postsRouter);
-app.use('/upload', uploadRouter);
+app.use('/users', usersRouter /* #swagger.tags = ['Users'] */);
+app.use('/posts', postsRouter /* #swagger.tags = ['Posts'] */);
+app.use('/upload', uploadRouter /* #swagger.tags = ['Upload'] */);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // No matched path
 app.use((req, res, next) => {
