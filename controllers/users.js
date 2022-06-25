@@ -79,6 +79,8 @@ const signIn = asyncErrorHandler(async (req, res, next) => {
 const updatePassword = asyncErrorHandler(async (req, res, next) => {
   let { password, confirmedPassword } = req.body;
 
+  if (!validator.isAlphanumeric(password)) return appError(400, '密碼只能是英數字的組合！', next);
+  if (!validator.isLength(password, { min: 8, max: 16 })) return appError(400, '密碼長度只能介於 8 到 16 碼！', next);
   if (!password || !confirmedPassword) return appError(400, '欄位資訊不能為空！', next);
   if (!validator.isLength(password, { min: 8, max: 16 })) return appError(400, '密碼長度只能介於 8 到 16 碼！', next);
   if (password !== confirmedPassword) return appError(400, '密碼不一致！', next);
