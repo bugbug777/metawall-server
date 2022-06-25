@@ -21,4 +21,21 @@ router.get('/following', checkAuth, UserController.getFollowingList);
 router.get('/', UserController.getUsers);
 router.delete('/', UserController.deleteUsers);
 
+const passport = require('passport');
+
+// Google Oauth
+router.get('/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+router.get('/google/callback', 
+  passport.authenticate('google', { session: false }),
+  (req, res) => {
+    // Successful authentication, redirect home.
+    // res.redirect('/');
+    res.json({
+      status: true,
+      data: req.user
+    })
+  });
+
 module.exports = router;
