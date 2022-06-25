@@ -1,6 +1,5 @@
 const path = require('path');
 const multer = require('multer');
-const appError = require('../service/appError');
 
 // 檢驗檔案格式
 const checkFile = multer({

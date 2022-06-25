@@ -5,10 +5,14 @@ const asyncErrorHandler = require('../service/asyncErrorHandler');
 const successHandler = require('../service/successHandler')
 
 const uploadToImgur = asyncErrorHandler(async (req, res, next) => {
+  const { type } = req.query;
+
   if(!req.files) return appError(400,'尚未上傳檔案',next);
 
-  const dimension = sizeOf(req.files[0].buffer);
-  if (dimension.width !== dimension.height) return appError(400, '圖片不是 1:1 尺寸！', next);
+  if (type === 'avatar') {
+    const dimension = sizeOf(req.files[0].buffer);
+    if (dimension.width !== dimension.height) return appError(400, '圖片不是 1:1 尺寸！', next);
+  }
   
   const client = new ImgurClient({
     clientId: process.env.IMGUR_CLIENT_ID,
