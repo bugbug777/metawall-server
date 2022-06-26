@@ -5,11 +5,11 @@
     "description": "Metawall RESTful API Docs.",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "https://enigmatic-thicket-59722.herokuapp.com",
   "basePath": "/",
   "schemes": [
-    "http",
-    "https"
+    "https",
+    "http"
   ],
   "securityDefinitions": {
     "apiKeyAuth": {
