@@ -1,4 +1,4 @@
-const swaggerAutogen = require("swagger-autogen")({openapi: '3.0.0'});
+const swaggerAutogen = require("swagger-autogen")({ openapi: "3.0.0" });
 
 const doc = {
   info: {
@@ -9,10 +9,10 @@ const doc = {
   schemes: ["http", "https"],
   securityDefinitions: {
     bearerAuth: {
-      type: 'http',
-      scheme: 'bearer',
-      bearerFormat: 'JWT',
-      description: '使用 JWT 進行驗證！'
+      type: "http",
+      scheme: "bearer",
+      bearerFormat: "JWT",
+      description: "使用 JWT 進行驗證！",
     },
   },
   definitions: {
@@ -117,6 +117,107 @@ const doc = {
           ],
         },
       ],
+    },
+    getPosts: {
+      status: "success",
+      data: [
+        {
+          _id: "62b7bfde5958884ffb45af1e",
+          user: {
+            _id: "62b6d7a2e125d7b3aa0ea7db",
+            name: "sihle",
+          },
+          content: "The post is created by Sihle",
+          photo:
+            "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80",
+          likes: ["62b6d7a2e125d7b3aa0ea7db"],
+          createdAt: "2022-06-26T02:09:34.486Z",
+          comments: [],
+        },
+      ],
+    },
+    getPost: {
+      status: "success",
+      data: {
+        _id: "62b7bfde5958884ffb45af1e",
+        user: {
+          _id: "62b6d7a2e125d7b3aa0ea7db",
+          name: "sihle",
+        },
+        content: "The post is created by Sihle",
+        photo:
+          "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80",
+        likes: ["62b6d7a2e125d7b3aa0ea7db"],
+        createdAt: "2022-06-26T02:09:34.486Z",
+        comments: [],
+      },
+    },
+    addPost: {
+      $content: "The post is created by Sihle",
+      photo:
+        "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80",
+    },
+    addPostSuccess: {
+      status: "success",
+      data: {
+        user: "62b6d7a2e125d7b3aa0ea7db",
+        content: "The post is created by Sihle",
+        photo:
+          "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80",
+        likes: [],
+        _id: "62b7ec2a4cd2c43695d3cacf",
+        createdAt: "2022-06-26T05:18:34.915Z",
+      },
+    },
+    addLikeSuccess: {
+      status: "success",
+      data: {
+        _id: "62b7bfde5958884ffb45af1e",
+        user: "62b6d7a2e125d7b3aa0ea7db",
+        content: "The post is created by Sihle",
+        photo:
+          "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80",
+        likes: ["62b6d7a2e125d7b3aa0ea7db"],
+        createdAt: "2022-06-26T02:09:34.486Z",
+      },
+    },
+    unlikeSuccess: { $ref: "#/definitions/addLikeSuccess" },
+    addCommentSuccess: {
+      status: "success",
+      data: {
+        comment: "Today is a good day today!",
+        post: "62b7bfde5958884ffb45af1e",
+        user: "62b6d7a2e125d7b3aa0ea7db",
+        _id: "62b7f0da58344f2199dac8a5",
+        createdAt: "2022-06-26T05:38:34.115Z",
+      },
+    },
+    getPersonalPostsSuccess: {
+      status: "success",
+      data: [
+        {
+          _id: "62b7ec2a4cd2c43695d3cacf",
+          user: "62b6d7a2e125d7b3aa0ea7db",
+          content: "The post is created by Sihle",
+          photo:
+            "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80",
+          likes: [],
+          createdAt: "2022-06-26T05:18:34.915Z",
+          comments: [],
+        },
+      ],
+    },
+    editPostSuccess: {
+      status: "success",
+      data: {
+        _id: "62b7f41beaf61b673bdd3b70",
+        user: "62b6d7a2e125d7b3aa0ea7db",
+        content: "修改過的貼文！",
+        photo:
+          "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80",
+        likes: [],
+        createdAt: "2022-06-26T05:52:27.804Z",
+      },
     },
   },
 };

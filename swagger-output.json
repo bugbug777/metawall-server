@@ -495,25 +495,126 @@
         "tags": [
           "Posts - 貼文功能"
         ],
-        "description": "",
+        "description": "取得所有貼文",
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "成功回傳！",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getPosts"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/getPosts"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "post": {
         "tags": [
           "Posts - 貼文功能"
         ],
-        "description": "",
-        "parameters": [],
-        "responses": {}
+        "description": "新增一筆貼文",
+        "parameters": [
+          {
+            "name": "200",
+            "in": "body",
+            "description": "資料格式",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/addPost"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "新增成功！",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/addPostSuccess"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/addPostSuccess"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "delete": {
         "tags": [
-          "Posts - 貼文功能"
+          "Posts - 輔助測試"
         ],
-        "description": "",
+        "description": "刪除所有貼文",
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "新增成功！",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/posts/{id}": {
@@ -521,7 +622,7 @@
         "tags": [
           "Posts - 貼文功能"
         ],
-        "description": "",
+        "description": "取得單筆貼文",
         "parameters": [
           {
             "name": "id",
@@ -529,16 +630,38 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "貼文 ID"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "成功回傳！",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getPost"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/getPost"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "patch": {
         "tags": [
-          "Posts - 貼文功能"
+          "Posts - 輔助測試"
         ],
-        "description": "",
+        "description": "編輯單筆貼文",
         "parameters": [
           {
             "name": "id",
@@ -547,9 +670,48 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "200",
+            "in": "body",
+            "description": "資料格式",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string",
+                  "example": "修改過的貼文！"
+                }
+              },
+              "required": [
+                "content"
+              ]
+            }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "修改成功！",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/editPostSuccess"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/editPostSuccess"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/posts/{id}/like": {
@@ -557,7 +719,7 @@
         "tags": [
           "Posts - 貼文功能"
         ],
-        "description": "",
+        "description": "新增貼文按讚",
         "parameters": [
           {
             "name": "id",
@@ -565,10 +727,32 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "貼文 ID"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "成功按讚！",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/addLikeSuccess"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/addLikeSuccess"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/posts/{id}/unlike": {
@@ -576,7 +760,7 @@
         "tags": [
           "Posts - 貼文功能"
         ],
-        "description": "",
+        "description": "移除貼文按讚",
         "parameters": [
           {
             "name": "id",
@@ -584,10 +768,32 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "貼文 ID"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "成功取消按讚！",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/unlikeSuccess"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/unlikeSuccess"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/posts/{id}/comment": {
@@ -595,7 +801,7 @@
         "tags": [
           "Posts - 貼文功能"
         ],
-        "description": "",
+        "description": "新增一筆貼文留言",
         "parameters": [
           {
             "name": "id",
@@ -604,9 +810,48 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "200",
+            "in": "body",
+            "description": "資料格式",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "comment": {
+                  "type": "string",
+                  "example": "Today is a good day today!"
+                }
+              },
+              "required": [
+                "comment"
+              ]
+            }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "新增成功！",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/addCommentSuccess"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/addCommentSuccess"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/posts/user/{id}": {
@@ -614,7 +859,7 @@
         "tags": [
           "Posts - 貼文功能"
         ],
-        "description": "",
+        "description": "取得個人所有貼文",
         "parameters": [
           {
             "name": "id",
@@ -622,10 +867,32 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "使用者 ID"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "新增成功！",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getPersonalPostsSuccess"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/getPersonalPostsSuccess"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/upload/": {
@@ -1023,6 +1290,371 @@
         },
         "xml": {
           "name": "getUsers"
+        }
+      },
+      "getPosts": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "example": "62b7bfde5958884ffb45af1e"
+                },
+                "user": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "62b6d7a2e125d7b3aa0ea7db"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "sihle"
+                    }
+                  }
+                },
+                "content": {
+                  "type": "string",
+                  "example": "The post is created by Sihle"
+                },
+                "photo": {
+                  "type": "string",
+                  "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
+                },
+                "likes": {
+                  "type": "array",
+                  "example": [
+                    "62b6d7a2e125d7b3aa0ea7db"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2022-06-26T02:09:34.486Z"
+                },
+                "comments": {
+                  "type": "array",
+                  "example": [],
+                  "items": {}
+                }
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "getPosts"
+        }
+      },
+      "getPost": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "62b7bfde5958884ffb45af1e"
+              },
+              "user": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "example": "62b6d7a2e125d7b3aa0ea7db"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "sihle"
+                  }
+                }
+              },
+              "content": {
+                "type": "string",
+                "example": "The post is created by Sihle"
+              },
+              "photo": {
+                "type": "string",
+                "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
+              },
+              "likes": {
+                "type": "array",
+                "example": [
+                  "62b6d7a2e125d7b3aa0ea7db"
+                ],
+                "items": {
+                  "type": "string"
+                }
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2022-06-26T02:09:34.486Z"
+              },
+              "comments": {
+                "type": "array",
+                "example": [],
+                "items": {}
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "getPost"
+        }
+      },
+      "addPost": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "example": "The post is created by Sihle"
+          },
+          "photo": {
+            "type": "string",
+            "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
+          }
+        },
+        "required": [
+          "content"
+        ],
+        "xml": {
+          "name": "addPost"
+        }
+      },
+      "addPostSuccess": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "user": {
+                "type": "string",
+                "example": "62b6d7a2e125d7b3aa0ea7db"
+              },
+              "content": {
+                "type": "string",
+                "example": "The post is created by Sihle"
+              },
+              "photo": {
+                "type": "string",
+                "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
+              },
+              "likes": {
+                "type": "array",
+                "example": [],
+                "items": {}
+              },
+              "_id": {
+                "type": "string",
+                "example": "62b7ec2a4cd2c43695d3cacf"
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2022-06-26T05:18:34.915Z"
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "addPostSuccess"
+        }
+      },
+      "addLikeSuccess": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "62b7bfde5958884ffb45af1e"
+              },
+              "user": {
+                "type": "string",
+                "example": "62b6d7a2e125d7b3aa0ea7db"
+              },
+              "content": {
+                "type": "string",
+                "example": "The post is created by Sihle"
+              },
+              "photo": {
+                "type": "string",
+                "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
+              },
+              "likes": {
+                "type": "array",
+                "example": [
+                  "62b6d7a2e125d7b3aa0ea7db"
+                ],
+                "items": {
+                  "type": "string"
+                }
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2022-06-26T02:09:34.486Z"
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "addLikeSuccess"
+        }
+      },
+      "unlikeSuccess": {
+        "xml": {
+          "name": "unlikeSuccess"
+        },
+        "$ref": "#/components/schemas/addLikeSuccess"
+      },
+      "addCommentSuccess": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "comment": {
+                "type": "string",
+                "example": "Today is a good day today!"
+              },
+              "post": {
+                "type": "string",
+                "example": "62b7bfde5958884ffb45af1e"
+              },
+              "user": {
+                "type": "string",
+                "example": "62b6d7a2e125d7b3aa0ea7db"
+              },
+              "_id": {
+                "type": "string",
+                "example": "62b7f0da58344f2199dac8a5"
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2022-06-26T05:38:34.115Z"
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "addCommentSuccess"
+        }
+      },
+      "getPersonalPostsSuccess": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "example": "62b7ec2a4cd2c43695d3cacf"
+                },
+                "user": {
+                  "type": "string",
+                  "example": "62b6d7a2e125d7b3aa0ea7db"
+                },
+                "content": {
+                  "type": "string",
+                  "example": "The post is created by Sihle"
+                },
+                "photo": {
+                  "type": "string",
+                  "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
+                },
+                "likes": {
+                  "type": "array",
+                  "example": [],
+                  "items": {}
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2022-06-26T05:18:34.915Z"
+                },
+                "comments": {
+                  "type": "array",
+                  "example": [],
+                  "items": {}
+                }
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "getPersonalPostsSuccess"
+        }
+      },
+      "editPostSuccess": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "62b7f41beaf61b673bdd3b70"
+              },
+              "user": {
+                "type": "string",
+                "example": "62b6d7a2e125d7b3aa0ea7db"
+              },
+              "content": {
+                "type": "string",
+                "example": "修改過的貼文！"
+              },
+              "photo": {
+                "type": "string",
+                "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
+              },
+              "likes": {
+                "type": "array",
+                "example": [],
+                "items": {}
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2022-06-26T05:52:27.804Z"
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "editPostSuccess"
         }
       }
     },

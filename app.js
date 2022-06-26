@@ -81,6 +81,10 @@ app.use((err, req, res, next) => {
       err.message = '請輸入正確的 JWT 格式！';
       err.isOperational = true;
     }
+    if (err.name === 'TokenExpiredError') {
+      err.message = 'JWT 過期，請重新登入！';
+      err.isOperational = true;
+    }
     if (err.isOperational) {
       res.status(400).json({
         status: 'false',
