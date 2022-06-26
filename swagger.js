@@ -1,4 +1,4 @@
-const swaggerAutogen = require("swagger-autogen")({ openapi: "3.0.0" });
+const swaggerAutogen = require("swagger-autogen")();
 
 const doc = {
   info: {
@@ -8,12 +8,12 @@ const doc = {
   host: "localhost:3000",
   schemes: ["http", "https"],
   securityDefinitions: {
-    bearerAuth: {
-      type: "http",
-      scheme: "bearer",
-      bearerFormat: "JWT",
-      description: "使用 JWT 進行驗證！",
-    },
+    apiKeyAuth: {
+      type: "apiKey",
+      in: 'header',
+      name: 'Authorization',
+      description: '在 JWT 前加上 Bearer 以利授權驗證。'
+    }
   },
   definitions: {
     addUser: {

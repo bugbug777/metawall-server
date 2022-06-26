@@ -9,7 +9,7 @@ router.get(
   checkAuth,
   PostController.getPosts
   /*
-    #swagger.security = [{ 'bearerAuth': [] }]
+    #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.description = '取得所有貼文'
     #swagger.responses[200] = {
       description: '成功回傳！',
@@ -22,7 +22,7 @@ router.get(
   checkAuth,
   PostController.getPost
   /*
-    #swagger.security = [{ 'bearerAuth': [] }]
+    #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.description = '取得單筆貼文'
     #swagger.parameters['id'] = {
       in: 'path',
@@ -40,7 +40,7 @@ router.post(
   checkAuth,
   PostController.addPost
   /*
-    #swagger.security = [{ 'bearerAuth': [] }]
+    #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.description = '新增一筆貼文'
     #swagger.parameters = {
       in: 'body',
@@ -59,7 +59,7 @@ router.post(
   checkAuth,
   PostController.addLike
   /*
-    #swagger.security = [{ 'bearerAuth': [] }]
+    #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.description = '新增貼文按讚'
     #swagger.parameters['id'] = {
       in: 'path',
@@ -77,7 +77,7 @@ router.delete(
   checkAuth,
   PostController.removeLike
   /*
-    #swagger.security = [{ 'bearerAuth': [] }]
+    #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.description = '移除貼文按讚'
     #swagger.parameters['id'] = {
       in: 'path',
@@ -95,7 +95,7 @@ router.post(
   checkAuth,
   PostController.addComment
   /*
-    #swagger.security = [{ 'bearerAuth': [] }]
+    #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.description = '新增一筆貼文留言'
     #swagger.parameters = {
       in: 'body',
@@ -114,7 +114,7 @@ router.get(
   checkAuth,
   PostController.getPersonalPosts
   /*
-    #swagger.security = [{ 'bearerAuth': [] }]
+    #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.description = '取得個人所有貼文'
     #swagger.parameters['id'] = {
       in: 'path',
@@ -134,7 +134,7 @@ router.patch(
   checkAuth,
   PostController.editPost
   /*
-    #swagger.security = [{ 'bearerAuth': [] }]
+    #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.tags = ['Posts - 輔助測試']
     #swagger.description = '編輯單筆貼文'
     #swagger.parameters = {
@@ -155,7 +155,7 @@ router.delete(
   "/",
   PostController.deletePosts
   /*
-    #swagger.security = [{ 'bearerAuth': [] }]
+    #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.tags = ['Posts - 輔助測試']
     #swagger.description = '刪除所有貼文'
     #swagger.responses[200] = {

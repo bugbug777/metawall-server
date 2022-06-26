@@ -1,18 +1,24 @@
 {
-  "openapi": "3.0.0",
+  "swagger": "2.0",
   "info": {
     "title": "Metawall",
     "description": "Metawall RESTful API Docs.",
     "version": "1.0.0"
   },
-  "servers": [
-    {
-      "url": "http://localhost:3000/"
-    },
-    {
-      "url": "https://localhost:3000/"
-    }
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http",
+    "https"
   ],
+  "securityDefinitions": {
+    "apiKeyAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "description": "在 JWT 前加上 Bearer 以利授權驗證。"
+    }
+  },
   "paths": {
     "/users/sign_up": {
       "post": {
@@ -27,24 +33,15 @@
             "description": "資料格式",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/addUser"
+              "$ref": "#/definitions/addUser"
             }
           }
         ],
         "responses": {
           "200": {
             "description": "新增成功！",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/registerSuccess"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/registerSuccess"
-                }
-              }
+            "schema": {
+              "$ref": "#/definitions/registerSuccess"
             }
           }
         }
@@ -63,24 +60,15 @@
             "description": "資料格式",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/userLogin"
+              "$ref": "#/definitions/userLogin"
             }
           }
         ],
         "responses": {
           "200": {
             "description": "登入成功！",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/loginSuccess"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/loginSuccess"
-                }
-              }
+            "schema": {
+              "$ref": "#/definitions/loginSuccess"
             }
           }
         }
@@ -96,23 +84,14 @@
         "responses": {
           "200": {
             "description": "成功回傳！",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/authSuccess"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/authSuccess"
-                }
-              }
+            "schema": {
+              "$ref": "#/definitions/authSuccess"
             }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKeyAuth": []
           }
         ]
       },
@@ -128,30 +107,21 @@
             "description": "資料格式",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/updateProfile"
+              "$ref": "#/definitions/updateProfile"
             }
           }
         ],
         "responses": {
           "200": {
             "description": "更新成功！",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/updateProfileSuccess"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/updateProfileSuccess"
-                }
-              }
+            "schema": {
+              "$ref": "#/definitions/updateProfileSuccess"
             }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKeyAuth": []
           }
         ]
       }
@@ -169,30 +139,21 @@
             "description": "資料格式",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/updatePassword"
+              "$ref": "#/definitions/updatePassword"
             }
           }
         ],
         "responses": {
           "200": {
             "description": "更新成功！",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/updatePasswordSuccess"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/updatePasswordSuccess"
-                }
-              }
+            "schema": {
+              "$ref": "#/definitions/updatePasswordSuccess"
             }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKeyAuth": []
           }
         ]
       }
@@ -208,68 +169,39 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "description": "使用者 ID"
           }
         ],
         "responses": {
           "200": {
             "description": "成功追蹤！",
-            "content": {
-              "application/json": {
-                "schema": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
                   "type": "object",
                   "properties": {
-                    "status": {
+                    "message": {
                       "type": "string",
-                      "example": "success"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "成功追蹤！"
-                        }
-                      }
+                      "example": "成功追蹤！"
                     }
-                  },
-                  "xml": {
-                    "name": "main"
                   }
                 }
               },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "success"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "成功追蹤！"
-                        }
-                      }
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
+              "xml": {
+                "name": "main"
               }
             }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKeyAuth": []
           }
         ]
       }
@@ -285,67 +217,38 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "成功取消追蹤！",
-            "content": {
-              "application/json": {
-                "schema": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
                   "type": "object",
                   "properties": {
-                    "status": {
+                    "message": {
                       "type": "string",
-                      "example": "success"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "成功取消追蹤！"
-                        }
-                      }
+                      "example": "成功取消追蹤！"
                     }
-                  },
-                  "xml": {
-                    "name": "main"
                   }
                 }
               },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "success"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "成功取消追蹤！"
-                        }
-                      }
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
+              "xml": {
+                "name": "main"
               }
             }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKeyAuth": []
           }
         ]
       }
@@ -360,23 +263,14 @@
         "responses": {
           "200": {
             "description": "成功取得按讚列表！",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/getLikeList"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/getLikeList"
-                }
-              }
+            "schema": {
+              "$ref": "#/definitions/getLikeList"
             }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKeyAuth": []
           }
         ]
       }
@@ -391,23 +285,14 @@
         "responses": {
           "200": {
             "description": "成功取得追蹤列表！",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/getFollowingList"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/getFollowingList"
-                }
-              }
+            "schema": {
+              "$ref": "#/definitions/getFollowingList"
             }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKeyAuth": []
           }
         ]
       }
@@ -422,17 +307,8 @@
         "responses": {
           "200": {
             "description": "成功取得所有使用者！",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/getUsers"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/getUsers"
-                }
-              }
+            "schema": {
+              "$ref": "#/definitions/getUsers"
             }
           }
         }
@@ -446,44 +322,21 @@
         "responses": {
           "200": {
             "description": "成功取得所有使用者！",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "success"
-                    },
-                    "data": {
-                      "type": "array",
-                      "example": [],
-                      "items": {}
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "example": [],
+                  "items": {}
                 }
               },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "success"
-                    },
-                    "data": {
-                      "type": "array",
-                      "example": [],
-                      "items": {}
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
+              "xml": {
+                "name": "main"
               }
             }
           }
@@ -500,23 +353,14 @@
         "responses": {
           "200": {
             "description": "成功回傳！",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/getPosts"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/getPosts"
-                }
-              }
+            "schema": {
+              "$ref": "#/definitions/getPosts"
             }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKeyAuth": []
           }
         ]
       },
@@ -532,30 +376,21 @@
             "description": "資料格式",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/addPost"
+              "$ref": "#/definitions/addPost"
             }
           }
         ],
         "responses": {
           "200": {
             "description": "新增成功！",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/addPostSuccess"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/addPostSuccess"
-                }
-              }
+            "schema": {
+              "$ref": "#/definitions/addPostSuccess"
             }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKeyAuth": []
           }
         ]
       },
@@ -568,51 +403,28 @@
         "responses": {
           "200": {
             "description": "新增成功！",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "success"
-                    },
-                    "data": {
-                      "type": "array",
-                      "example": [],
-                      "items": {}
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "example": [],
+                  "items": {}
                 }
               },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "success"
-                    },
-                    "data": {
-                      "type": "array",
-                      "example": [],
-                      "items": {}
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
+              "xml": {
+                "name": "main"
               }
             }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKeyAuth": []
           }
         ]
       }
@@ -628,32 +440,21 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "description": "貼文 ID"
           }
         ],
         "responses": {
           "200": {
             "description": "成功回傳！",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/getPost"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/getPost"
-                }
-              }
+            "schema": {
+              "$ref": "#/definitions/getPost"
             }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKeyAuth": []
           }
         ]
       },
@@ -667,9 +468,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "type": "string"
           },
           {
             "name": "200",
@@ -693,23 +492,14 @@
         "responses": {
           "200": {
             "description": "修改成功！",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/editPostSuccess"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/editPostSuccess"
-                }
-              }
+            "schema": {
+              "$ref": "#/definitions/editPostSuccess"
             }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKeyAuth": []
           }
         ]
       }
@@ -725,32 +515,21 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "description": "貼文 ID"
           }
         ],
         "responses": {
           "200": {
             "description": "成功按讚！",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/addLikeSuccess"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/addLikeSuccess"
-                }
-              }
+            "schema": {
+              "$ref": "#/definitions/addLikeSuccess"
             }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKeyAuth": []
           }
         ]
       }
@@ -766,32 +545,21 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "description": "貼文 ID"
           }
         ],
         "responses": {
           "200": {
             "description": "成功取消按讚！",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/unlikeSuccess"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/unlikeSuccess"
-                }
-              }
+            "schema": {
+              "$ref": "#/definitions/unlikeSuccess"
             }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKeyAuth": []
           }
         ]
       }
@@ -807,9 +575,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "type": "string"
           },
           {
             "name": "200",
@@ -833,23 +599,14 @@
         "responses": {
           "200": {
             "description": "新增成功！",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/addCommentSuccess"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/addCommentSuccess"
-                }
-              }
+            "schema": {
+              "$ref": "#/definitions/addCommentSuccess"
             }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKeyAuth": []
           }
         ]
       }
@@ -865,32 +622,21 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "description": "使用者 ID"
           }
         ],
         "responses": {
           "200": {
             "description": "新增成功！",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/getPersonalPostsSuccess"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/getPersonalPostsSuccess"
-                }
-              }
+            "schema": {
+              "$ref": "#/definitions/getPersonalPostsSuccess"
             }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKeyAuth": []
           }
         ]
       }
@@ -900,469 +646,404 @@
         "tags": [
           "Upload - 圖片上傳"
         ],
-        "description": "",
-        "parameters": [],
-        "responses": {}
+        "description": "上傳圖片",
+        "parameters": [
+          {
+            "name": "200",
+            "in": "formData",
+            "description": "資料格式",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "上傳成功！",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "string",
+                  "example": "https://i.imgur.com/DfBOYlv.jpg"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       }
     }
   },
-  "components": {
-    "schemas": {
-      "addUser": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "example": "sihle"
-          },
-          "email": {
-            "type": "string",
-            "example": "gubug777@gmail.com"
-          },
-          "password": {
-            "type": "string",
-            "example": "qwe12345"
-          }
+  "definitions": {
+    "addUser": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "sihle"
         },
-        "required": [
-          "name",
-          "email",
-          "password"
-        ],
-        "xml": {
-          "name": "addUser"
+        "email": {
+          "type": "string",
+          "example": "gubug777@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "qwe12345"
         }
       },
-      "registerSuccess": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "example": "success"
-          },
-          "data": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "example": "sihle"
-              },
-              "token": {
-                "type": "string",
-                "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjZkN2EyZTEyNWQ3YjNhYTBlYTdkYiIsImlhdCI6MTY1NjE0OTkyMywiZXhwIjoxNjU4NzQxOTIzfQ.J60uNuIFO2AIBciQbsayVjY6wCpHHYPjxMqnIIFxvsM"
-              }
+      "required": [
+        "name",
+        "email",
+        "password"
+      ]
+    },
+    "registerSuccess": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "sihle"
+            },
+            "token": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjZkN2EyZTEyNWQ3YjNhYTBlYTdkYiIsImlhdCI6MTY1NjE0OTkyMywiZXhwIjoxNjU4NzQxOTIzfQ.J60uNuIFO2AIBciQbsayVjY6wCpHHYPjxMqnIIFxvsM"
             }
           }
+        }
+      }
+    },
+    "userLogin": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "gubug777@gmail.com"
         },
-        "xml": {
-          "name": "registerSuccess"
+        "password": {
+          "type": "string",
+          "example": "qwe12345"
         }
       },
-      "userLogin": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string",
-            "example": "gubug777@gmail.com"
-          },
-          "password": {
-            "type": "string",
-            "example": "qwe12345"
+      "required": [
+        "email",
+        "password"
+      ]
+    },
+    "loginSuccess": {
+      "$ref": "#/definitions/registerSuccess"
+    },
+    "authSuccess": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "example": "62b6d7a2e125d7b3aa0ea7db"
+            },
+            "name": {
+              "type": "string",
+              "example": "sihle"
+            },
+            "email": {
+              "type": "string",
+              "example": "gubug777@gmail.com"
+            },
+            "gender": {
+              "type": "string",
+              "example": "male"
+            },
+            "avatar": {
+              "type": "string",
+              "example": ""
+            },
+            "followers": {
+              "type": "array",
+              "example": [],
+              "items": {}
+            },
+            "following": {
+              "type": "array",
+              "example": [],
+              "items": {}
+            }
           }
+        }
+      }
+    },
+    "updateProfile": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "sihle"
         },
-        "required": [
-          "email",
-          "password"
-        ],
-        "xml": {
-          "name": "userLogin"
+        "gender": {
+          "type": "string",
+          "example": "male"
+        },
+        "avatar": {
+          "type": "string",
+          "example": ""
         }
       },
-      "loginSuccess": {
-        "xml": {
-          "name": "loginSuccess"
+      "required": [
+        "name",
+        "gender"
+      ]
+    },
+    "updateProfileSuccess": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
         },
-        "$ref": "#/components/schemas/registerSuccess"
+        "data": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "example": "62b6d7a2e125d7b3aa0ea7db"
+            },
+            "name": {
+              "type": "string",
+              "example": "sihle"
+            },
+            "email": {
+              "type": "string",
+              "example": "gubug777@gmail.com"
+            },
+            "gender": {
+              "type": "string",
+              "example": "male"
+            },
+            "avatar": {
+              "type": "string",
+              "example": ""
+            },
+            "followers": {
+              "type": "array",
+              "example": [],
+              "items": {}
+            },
+            "following": {
+              "type": "array",
+              "example": [],
+              "items": {}
+            }
+          }
+        }
+      }
+    },
+    "updatePassword": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string",
+          "example": "qwe12345"
+        },
+        "confirmedPassword": {
+          "type": "string",
+          "example": "qwe12345"
+        }
       },
-      "authSuccess": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "example": "success"
-          },
-          "data": {
+      "required": [
+        "password",
+        "confirmedPassword"
+      ]
+    },
+    "updatePasswordSuccess": {
+      "$ref": "#/definitions/registerSuccess"
+    },
+    "getLikeList": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "data": {
+          "type": "array",
+          "items": {
             "type": "object",
             "properties": {
               "_id": {
                 "type": "string",
-                "example": "62b6d7a2e125d7b3aa0ea7db"
+                "example": "62b7bfde5958884ffb45af1e"
               },
-              "name": {
-                "type": "string",
-                "example": "sihle"
-              },
-              "email": {
-                "type": "string",
-                "example": "gubug777@gmail.com"
-              },
-              "gender": {
-                "type": "string",
-                "example": "male"
-              },
-              "avatar": {
-                "type": "string",
-                "example": ""
-              },
-              "followers": {
-                "type": "array",
-                "example": [],
-                "items": {}
-              },
-              "following": {
-                "type": "array",
-                "example": [],
-                "items": {}
-              }
-            }
-          }
-        },
-        "xml": {
-          "name": "authSuccess"
-        }
-      },
-      "updateProfile": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "example": "sihle"
-          },
-          "gender": {
-            "type": "string",
-            "example": "male"
-          },
-          "avatar": {
-            "type": "string",
-            "example": ""
-          }
-        },
-        "required": [
-          "name",
-          "gender"
-        ],
-        "xml": {
-          "name": "updateProfile"
-        }
-      },
-      "updateProfileSuccess": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "example": "success"
-          },
-          "data": {
-            "type": "object",
-            "properties": {
-              "_id": {
-                "type": "string",
-                "example": "62b6d7a2e125d7b3aa0ea7db"
-              },
-              "name": {
-                "type": "string",
-                "example": "sihle"
-              },
-              "email": {
-                "type": "string",
-                "example": "gubug777@gmail.com"
-              },
-              "gender": {
-                "type": "string",
-                "example": "male"
-              },
-              "avatar": {
-                "type": "string",
-                "example": ""
-              },
-              "followers": {
-                "type": "array",
-                "example": [],
-                "items": {}
-              },
-              "following": {
-                "type": "array",
-                "example": [],
-                "items": {}
-              }
-            }
-          }
-        },
-        "xml": {
-          "name": "updateProfileSuccess"
-        }
-      },
-      "updatePassword": {
-        "type": "object",
-        "properties": {
-          "password": {
-            "type": "string",
-            "example": "qwe12345"
-          },
-          "confirmedPassword": {
-            "type": "string",
-            "example": "qwe12345"
-          }
-        },
-        "required": [
-          "password",
-          "confirmedPassword"
-        ],
-        "xml": {
-          "name": "updatePassword"
-        }
-      },
-      "updatePasswordSuccess": {
-        "xml": {
-          "name": "updatePasswordSuccess"
-        },
-        "$ref": "#/components/schemas/registerSuccess"
-      },
-      "getLikeList": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "example": "success"
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "_id": {
-                  "type": "string",
-                  "example": "62b7bfde5958884ffb45af1e"
-                },
-                "user": {
-                  "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "string",
-                      "example": "62b6d7a2e125d7b3aa0ea7db"
-                    },
-                    "name": {
-                      "type": "string",
-                      "example": "sihle"
-                    }
+              "user": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "example": "62b6d7a2e125d7b3aa0ea7db"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "sihle"
                   }
-                },
-                "content": {
-                  "type": "string",
-                  "example": "The post is created by Sihle"
-                },
-                "photo": {
-                  "type": "string",
-                  "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
-                },
-                "likes": {
-                  "type": "array",
-                  "example": [
-                    "62b6d7a2e125d7b3aa0ea7db"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "createdAt": {
-                  "type": "string",
-                  "example": "2022-06-26T02:09:34.486Z"
                 }
+              },
+              "content": {
+                "type": "string",
+                "example": "The post is created by Sihle"
+              },
+              "photo": {
+                "type": "string",
+                "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
+              },
+              "likes": {
+                "type": "array",
+                "example": [
+                  "62b6d7a2e125d7b3aa0ea7db"
+                ],
+                "items": {
+                  "type": "string"
+                }
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2022-06-26T02:09:34.486Z"
               }
             }
           }
-        },
-        "xml": {
-          "name": "getLikeList"
         }
-      },
-      "getFollowingList": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "example": "success"
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "user": {
+      }
+    },
+    "getFollowingList": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "user": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "example": "62b72f22f56ed60ce3d0ea02"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "sihle12"
+                  }
+                }
+              },
+              "_id": {
+                "type": "string",
+                "example": "62b7bf1c5e439f74d01607e0"
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2022-06-26T02:06:20.467Z"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getUsers": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "62b6d7a2e125d7b3aa0ea7db"
+              },
+              "name": {
+                "type": "string",
+                "example": "sihle"
+              },
+              "email": {
+                "type": "string",
+                "example": "gubug777@gmail.com"
+              },
+              "gender": {
+                "type": "string",
+                "example": "male"
+              },
+              "avatar": {
+                "type": "string",
+                "example": ""
+              },
+              "followers": {
+                "type": "array",
+                "example": [],
+                "items": {}
+              },
+              "following": {
+                "type": "array",
+                "items": {
                   "type": "object",
                   "properties": {
-                    "_id": {
+                    "user": {
                       "type": "string",
                       "example": "62b72f22f56ed60ce3d0ea02"
                     },
-                    "name": {
-                      "type": "string",
-                      "example": "sihle12"
-                    }
-                  }
-                },
-                "_id": {
-                  "type": "string",
-                  "example": "62b7bf1c5e439f74d01607e0"
-                },
-                "createdAt": {
-                  "type": "string",
-                  "example": "2022-06-26T02:06:20.467Z"
-                }
-              }
-            }
-          }
-        },
-        "xml": {
-          "name": "getFollowingList"
-        }
-      },
-      "getUsers": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "example": "success"
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "_id": {
-                  "type": "string",
-                  "example": "62b6d7a2e125d7b3aa0ea7db"
-                },
-                "name": {
-                  "type": "string",
-                  "example": "sihle"
-                },
-                "email": {
-                  "type": "string",
-                  "example": "gubug777@gmail.com"
-                },
-                "gender": {
-                  "type": "string",
-                  "example": "male"
-                },
-                "avatar": {
-                  "type": "string",
-                  "example": ""
-                },
-                "followers": {
-                  "type": "array",
-                  "example": [],
-                  "items": {}
-                },
-                "following": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "user": {
-                        "type": "string",
-                        "example": "62b72f22f56ed60ce3d0ea02"
-                      },
-                      "_id": {
-                        "type": "string",
-                        "example": "62b7bf1c5e439f74d01607e0"
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "example": "2022-06-26T02:06:20.467Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "xml": {
-          "name": "getUsers"
-        }
-      },
-      "getPosts": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "example": "success"
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "_id": {
-                  "type": "string",
-                  "example": "62b7bfde5958884ffb45af1e"
-                },
-                "user": {
-                  "type": "object",
-                  "properties": {
                     "_id": {
                       "type": "string",
-                      "example": "62b6d7a2e125d7b3aa0ea7db"
+                      "example": "62b7bf1c5e439f74d01607e0"
                     },
-                    "name": {
+                    "createdAt": {
                       "type": "string",
-                      "example": "sihle"
+                      "example": "2022-06-26T02:06:20.467Z"
                     }
                   }
-                },
-                "content": {
-                  "type": "string",
-                  "example": "The post is created by Sihle"
-                },
-                "photo": {
-                  "type": "string",
-                  "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
-                },
-                "likes": {
-                  "type": "array",
-                  "example": [
-                    "62b6d7a2e125d7b3aa0ea7db"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "createdAt": {
-                  "type": "string",
-                  "example": "2022-06-26T02:09:34.486Z"
-                },
-                "comments": {
-                  "type": "array",
-                  "example": [],
-                  "items": {}
                 }
               }
             }
           }
-        },
-        "xml": {
-          "name": "getPosts"
         }
-      },
-      "getPost": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "example": "success"
-          },
-          "data": {
+      }
+    },
+    "getPosts": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "data": {
+          "type": "array",
+          "items": {
             "type": "object",
             "properties": {
               "_id": {
@@ -1410,224 +1091,216 @@
               }
             }
           }
-        },
-        "xml": {
-          "name": "getPost"
         }
-      },
-      "addPost": {
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "string",
-            "example": "The post is created by Sihle"
-          },
-          "photo": {
-            "type": "string",
-            "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
-          }
+      }
+    },
+    "getPost": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
         },
-        "required": [
-          "content"
-        ],
-        "xml": {
-          "name": "addPost"
-        }
-      },
-      "addPostSuccess": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "example": "success"
-          },
-          "data": {
-            "type": "object",
-            "properties": {
-              "user": {
-                "type": "string",
-                "example": "62b6d7a2e125d7b3aa0ea7db"
-              },
-              "content": {
-                "type": "string",
-                "example": "The post is created by Sihle"
-              },
-              "photo": {
-                "type": "string",
-                "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
-              },
-              "likes": {
-                "type": "array",
-                "example": [],
-                "items": {}
-              },
-              "_id": {
-                "type": "string",
-                "example": "62b7ec2a4cd2c43695d3cacf"
-              },
-              "createdAt": {
-                "type": "string",
-                "example": "2022-06-26T05:18:34.915Z"
-              }
-            }
-          }
-        },
-        "xml": {
-          "name": "addPostSuccess"
-        }
-      },
-      "addLikeSuccess": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "example": "success"
-          },
-          "data": {
-            "type": "object",
-            "properties": {
-              "_id": {
-                "type": "string",
-                "example": "62b7bfde5958884ffb45af1e"
-              },
-              "user": {
-                "type": "string",
-                "example": "62b6d7a2e125d7b3aa0ea7db"
-              },
-              "content": {
-                "type": "string",
-                "example": "The post is created by Sihle"
-              },
-              "photo": {
-                "type": "string",
-                "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
-              },
-              "likes": {
-                "type": "array",
-                "example": [
-                  "62b6d7a2e125d7b3aa0ea7db"
-                ],
-                "items": {
-                  "type": "string"
-                }
-              },
-              "createdAt": {
-                "type": "string",
-                "example": "2022-06-26T02:09:34.486Z"
-              }
-            }
-          }
-        },
-        "xml": {
-          "name": "addLikeSuccess"
-        }
-      },
-      "unlikeSuccess": {
-        "xml": {
-          "name": "unlikeSuccess"
-        },
-        "$ref": "#/components/schemas/addLikeSuccess"
-      },
-      "addCommentSuccess": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "example": "success"
-          },
-          "data": {
-            "type": "object",
-            "properties": {
-              "comment": {
-                "type": "string",
-                "example": "Today is a good day today!"
-              },
-              "post": {
-                "type": "string",
-                "example": "62b7bfde5958884ffb45af1e"
-              },
-              "user": {
-                "type": "string",
-                "example": "62b6d7a2e125d7b3aa0ea7db"
-              },
-              "_id": {
-                "type": "string",
-                "example": "62b7f0da58344f2199dac8a5"
-              },
-              "createdAt": {
-                "type": "string",
-                "example": "2022-06-26T05:38:34.115Z"
-              }
-            }
-          }
-        },
-        "xml": {
-          "name": "addCommentSuccess"
-        }
-      },
-      "getPersonalPostsSuccess": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "example": "success"
-          },
-          "data": {
-            "type": "array",
-            "items": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "example": "62b7bfde5958884ffb45af1e"
+            },
+            "user": {
               "type": "object",
               "properties": {
                 "_id": {
                   "type": "string",
-                  "example": "62b7ec2a4cd2c43695d3cacf"
-                },
-                "user": {
-                  "type": "string",
                   "example": "62b6d7a2e125d7b3aa0ea7db"
                 },
-                "content": {
+                "name": {
                   "type": "string",
-                  "example": "The post is created by Sihle"
-                },
-                "photo": {
-                  "type": "string",
-                  "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
-                },
-                "likes": {
-                  "type": "array",
-                  "example": [],
-                  "items": {}
-                },
-                "createdAt": {
-                  "type": "string",
-                  "example": "2022-06-26T05:18:34.915Z"
-                },
-                "comments": {
-                  "type": "array",
-                  "example": [],
-                  "items": {}
+                  "example": "sihle"
                 }
               }
+            },
+            "content": {
+              "type": "string",
+              "example": "The post is created by Sihle"
+            },
+            "photo": {
+              "type": "string",
+              "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
+            },
+            "likes": {
+              "type": "array",
+              "example": [
+                "62b6d7a2e125d7b3aa0ea7db"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            "createdAt": {
+              "type": "string",
+              "example": "2022-06-26T02:09:34.486Z"
+            },
+            "comments": {
+              "type": "array",
+              "example": [],
+              "items": {}
             }
           }
+        }
+      }
+    },
+    "addPost": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "example": "The post is created by Sihle"
         },
-        "xml": {
-          "name": "getPersonalPostsSuccess"
+        "photo": {
+          "type": "string",
+          "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
         }
       },
-      "editPostSuccess": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "example": "success"
-          },
-          "data": {
+      "required": [
+        "content"
+      ]
+    },
+    "addPostSuccess": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "user": {
+              "type": "string",
+              "example": "62b6d7a2e125d7b3aa0ea7db"
+            },
+            "content": {
+              "type": "string",
+              "example": "The post is created by Sihle"
+            },
+            "photo": {
+              "type": "string",
+              "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
+            },
+            "likes": {
+              "type": "array",
+              "example": [],
+              "items": {}
+            },
+            "_id": {
+              "type": "string",
+              "example": "62b7ec2a4cd2c43695d3cacf"
+            },
+            "createdAt": {
+              "type": "string",
+              "example": "2022-06-26T05:18:34.915Z"
+            }
+          }
+        }
+      }
+    },
+    "addLikeSuccess": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "example": "62b7bfde5958884ffb45af1e"
+            },
+            "user": {
+              "type": "string",
+              "example": "62b6d7a2e125d7b3aa0ea7db"
+            },
+            "content": {
+              "type": "string",
+              "example": "The post is created by Sihle"
+            },
+            "photo": {
+              "type": "string",
+              "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
+            },
+            "likes": {
+              "type": "array",
+              "example": [
+                "62b6d7a2e125d7b3aa0ea7db"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            "createdAt": {
+              "type": "string",
+              "example": "2022-06-26T02:09:34.486Z"
+            }
+          }
+        }
+      }
+    },
+    "unlikeSuccess": {
+      "$ref": "#/definitions/addLikeSuccess"
+    },
+    "addCommentSuccess": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "comment": {
+              "type": "string",
+              "example": "Today is a good day today!"
+            },
+            "post": {
+              "type": "string",
+              "example": "62b7bfde5958884ffb45af1e"
+            },
+            "user": {
+              "type": "string",
+              "example": "62b6d7a2e125d7b3aa0ea7db"
+            },
+            "_id": {
+              "type": "string",
+              "example": "62b7f0da58344f2199dac8a5"
+            },
+            "createdAt": {
+              "type": "string",
+              "example": "2022-06-26T05:38:34.115Z"
+            }
+          }
+        }
+      }
+    },
+    "getPersonalPostsSuccess": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "data": {
+          "type": "array",
+          "items": {
             "type": "object",
             "properties": {
               "_id": {
                 "type": "string",
-                "example": "62b7f41beaf61b673bdd3b70"
+                "example": "62b7ec2a4cd2c43695d3cacf"
               },
               "user": {
                 "type": "string",
@@ -1635,7 +1308,7 @@
               },
               "content": {
                 "type": "string",
-                "example": "修改過的貼文！"
+                "example": "The post is created by Sihle"
               },
               "photo": {
                 "type": "string",
@@ -1648,22 +1321,55 @@
               },
               "createdAt": {
                 "type": "string",
-                "example": "2022-06-26T05:52:27.804Z"
+                "example": "2022-06-26T05:18:34.915Z"
+              },
+              "comments": {
+                "type": "array",
+                "example": [],
+                "items": {}
               }
             }
           }
-        },
-        "xml": {
-          "name": "editPostSuccess"
         }
       }
     },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT",
-        "description": "使用 JWT 進行驗證！"
+    "editPostSuccess": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "example": "62b7f41beaf61b673bdd3b70"
+            },
+            "user": {
+              "type": "string",
+              "example": "62b6d7a2e125d7b3aa0ea7db"
+            },
+            "content": {
+              "type": "string",
+              "example": "修改過的貼文！"
+            },
+            "photo": {
+              "type": "string",
+              "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
+            },
+            "likes": {
+              "type": "array",
+              "example": [],
+              "items": {}
+            },
+            "createdAt": {
+              "type": "string",
+              "example": "2022-06-26T05:52:27.804Z"
+            }
+          }
+        }
       }
     }
   }

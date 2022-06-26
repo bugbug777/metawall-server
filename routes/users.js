@@ -44,7 +44,7 @@ router.get(
   checkAuth,
   UserController.getProfile
   /*
-    #swagger.security = [{ 'bearerAuth': [] }]
+    #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.description = '取得個人資料'
     #swagger.responses[200] = {
       description: '成功回傳！',
@@ -57,7 +57,7 @@ router.patch(
   checkAuth,
   UserController.updateProfile
   /*
-    #swagger.security = [{ 'bearerAuth': [] }]
+    #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.description = '更新個人資料'
     #swagger.parameters = {
       in: 'body',
@@ -76,7 +76,7 @@ router.post(
   checkAuth,
   UserController.updatePassword
   /*
-    #swagger.security = [{ 'bearerAuth': [] }]
+    #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.description = '更新個人資料'
     #swagger.parameters = {
       in: 'body',
@@ -97,7 +97,7 @@ router.post(
   checkAuth,
   UserController.followUser
   /*
-    #swagger.security = [{ 'bearerAuth': [] }]
+    #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.tags = ['Users - 好友按讚、追蹤']
     #swagger.description = '追蹤好友'
     #swagger.parameters['id'] = {
@@ -121,7 +121,7 @@ router.delete(
   checkAuth,
   UserController.unfollowUser
   /*
-    #swagger.security = [{ 'bearerAuth': [] }]
+    #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.tags = ['Users - 好友按讚、追蹤']
     #swagger.description = '追蹤好友'
     #swagger.responses[200] = {
@@ -140,7 +140,7 @@ router.get(
   checkAuth,
   UserController.getLikeList
   /*
-    #swagger.security = [{ 'bearerAuth': [] }]
+    #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.tags = ['Users - 好友按讚、追蹤']
     #swagger.description = '追蹤好友'
     #swagger.responses[200] = {
@@ -154,7 +154,7 @@ router.get(
   checkAuth,
   UserController.getFollowingList
   /*
-    #swagger.security = [{ 'bearerAuth': [] }]
+    #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.tags = ['Users - 好友按讚、追蹤']
     #swagger.description = '追蹤好友'
     #swagger.responses[200] = {
