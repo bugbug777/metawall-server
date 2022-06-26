@@ -14,21 +14,11 @@ router.post(
       in: 'body',
       description: '資料格式',
       required: true,
-      schema: {
-          "$name": "sihle",
-          "$email": "gubug777@gmail.com",
-          "$password": "qwe12345"
-      }
+      schema: { $ref: '#/definitions/addUser' }
     }
     #swagger.responses[200] = {
       description: '新增成功！',
-      schema: {
-        "status": "success",
-        "data": {
-            "name": "sihle",
-            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjZkN2EyZTEyNWQ3YjNhYTBlYTdkYiIsImlhdCI6MTY1NjE0OTkyMywiZXhwIjoxNjU4NzQxOTIzfQ.J60uNuIFO2AIBciQbsayVjY6wCpHHYPjxMqnIIFxvsM"
-        }
-      }
+      schema: { $ref: '#/definitions/registerSuccess' }
     }
   */
 );
@@ -41,20 +31,11 @@ router.post(
       in: 'body',
       description: '資料格式',
       required: true,
-      schema: {
-          "$email": "gubug777@gmail.com",
-          "$password": "qwe12345"
-      }
+      schema: { $ref: '#/definitions/userLogin' }
     }
     #swagger.responses[200] = {
       description: '登入成功！',
-      schema: {
-        "status": "success",
-        "data": {
-            "name": "sihle",
-            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjZkN2EyZTEyNWQ3YjNhYTBlYTdkYiIsImlhdCI6MTY1NjE0OTkyMywiZXhwIjoxNjU4NzQxOTIzfQ.J60uNuIFO2AIBciQbsayVjY6wCpHHYPjxMqnIIFxvsM"
-        }
-      }
+      schema: { $ref: '#/definitions/loginSuccess' }
     }
   */
 );
@@ -66,18 +47,7 @@ router.get(
     #swagger.description = '取得個人資料'
     #swagger.responses[200] = {
       description: '成功回傳！',
-      schema: {
-        "status": "success",
-        "data": {
-            "_id": "62b6d7a2e125d7b3aa0ea7db",
-            "name": "sihle",
-            "email": "gubug777@gmail.com",
-            "gender": "male",
-            "avatar": "",
-            "followers": [],
-            "following": []
-        }
-      }
+      schema: { $ref: '#/definitions/authSuccess' }
     }
   */
 );
@@ -91,26 +61,11 @@ router.patch(
       in: 'body',
       description: '資料格式',
       required: true,
-      schema: {
-          "$name": "sihle",
-          "$gender": "male",
-          "avatar": ""
-      }
+      schema: { $ref: '#/definitions/updateProfile' }
     }
     #swagger.responses[200] = {
       description: '更新成功！',
-      schema: {
-        "status": "success",
-        "data": {
-            "_id": "62b6d7a2e125d7b3aa0ea7db",
-            "name": "sihle",
-            "email": "gubug777@gmail.com",
-            "gender": "male",
-            "avatar": "",
-            "followers": [],
-            "following": []
-        }
-      }
+      schema: { $ref: '#/definitions/updateProfileSuccess' }
     }
   */
 );
@@ -124,33 +79,112 @@ router.post(
       in: 'body',
       description: '資料格式',
       required: true,
-      schema: {
-          "$password": "qwe12345",
-          "$confirmedPassword": "qwe12345"
-      }
+      schema: { $ref: '#/definitions/updatePassword' }
     }
     #swagger.responses[200] = {
       description: '更新成功！',
-      schema: {
-        "status": "success",
-        "data": {
-            "name": "sihle",
-            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjZkN2EyZTEyNWQ3YjNhYTBlYTdkYiIsImlhdCI6MTY1NjE3MTQ5MCwiZXhwIjoxNjU4NzYzNDkwfQ.fPIKkdg1uMXVEtvEwD9e3k22hUo3M3KPYXxUfK-J_08"
-        }
-      }
+      schema: { $ref: '#/definitions/updatePasswordSuccess' }
     }
   */
 );
 
 // 會員按讚追蹤動態
-router.post("/:id/follow", checkAuth, UserController.followUser);
-router.delete("/:id/unfollow", checkAuth, UserController.unfollowUser);
-router.get("/getLikeList", checkAuth, UserController.getLikeList);
-router.get("/following", checkAuth, UserController.getFollowingList);
+router.post(
+  "/:id/follow",
+  checkAuth,
+  UserController.followUser
+  /*
+    #swagger.tags = ['Users - 好友按讚、追蹤']
+    #swagger.description = '追蹤好友'
+    #swagger.parameters['id'] = {
+      in: 'path',
+      description: '使用者 ID',
+      required: true,
+    }
+    #swagger.responses[200] = {
+      description: '成功追蹤！',
+      schema: {
+        "status": "success",
+        "data": {
+            "message": "成功追蹤！"
+        }
+      }
+    }
+  */
+);
+router.delete(
+  "/:id/unfollow",
+  checkAuth,
+  UserController.unfollowUser
+  /*
+    #swagger.tags = ['Users - 好友按讚、追蹤']
+    #swagger.description = '追蹤好友'
+    #swagger.responses[200] = {
+      description: '成功取消追蹤！',
+      schema: {
+        "status": "success",
+        "data": {
+            "message": "成功取消追蹤！"
+        }
+      }
+    }
+  */
+);
+router.get(
+  "/getLikeList",
+  checkAuth,
+  UserController.getLikeList
+  /*
+    #swagger.tags = ['Users - 好友按讚、追蹤']
+    #swagger.description = '追蹤好友'
+    #swagger.responses[200] = {
+      description: '成功取得按讚列表！',
+      schema: { $ref: '#/definitions/getLikeList' }
+    }
+  */
+);
+router.get(
+  "/following",
+  checkAuth,
+  UserController.getFollowingList
+  /*
+    #swagger.tags = ['Users - 好友按讚、追蹤']
+    #swagger.description = '追蹤好友'
+    #swagger.responses[200] = {
+      description: '成功取得追蹤列表！',
+      schema: { $ref: '#/definitions/getFollowingList' }
+    }
+  */
+);
 
 // 輔助測試
-router.get("/", UserController.getUsers);
-router.delete("/", UserController.deleteUsers);
+router.get(
+  "/",
+  UserController.getUsers
+  /*
+    #swagger.tags = ['Users - 輔助測試']
+    #swagger.description = '取得所有使用者'
+    #swagger.responses[200] = {
+      description: '成功取得所有使用者！',
+      schema: { $ref: '#/definitions/getUsers' }
+    }
+  */
+);
+router.delete(
+  "/",
+  UserController.deleteUsers
+  /*
+    #swagger.tags = ['Users - 輔助測試']
+    #swagger.description = '刪除所有使用者'
+    #swagger.responses[200] = {
+      description: '成功取得所有使用者！',
+      schema: {
+        status: 'success',
+        data: []
+      }
+    }
+  */
+);
 
 const passport = require("passport");
 
@@ -158,6 +192,10 @@ const passport = require("passport");
 router.get(
   "/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
+  /*
+    #swagger.tags = ['Users - 第三方驗證']
+    #swagger.ignore = true
+  */
 );
 
 router.get(
@@ -171,6 +209,10 @@ router.get(
       data: req.user,
     });
   }
+  /*
+    #swagger.tags = ['Users - 第三方驗證']
+    #swagger.ignore = true
+  */
 );
 
 module.exports = router;

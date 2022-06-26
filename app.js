@@ -35,9 +35,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/users', usersRouter /* #swagger.tags = ['Users'] */);
-app.use('/posts', postsRouter /* #swagger.tags = ['Posts'] */);
-app.use('/upload', uploadRouter /* #swagger.tags = ['Upload'] */);
+app.use('/users', usersRouter /* #swagger.tags = ['Users - 會員功能'] */);
+app.use('/posts', postsRouter /* #swagger.tags = ['Posts - 貼文功能'] */);
+app.use('/upload', uploadRouter /* #swagger.tags = ['Upload - 圖片上傳'] */);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // No matched path

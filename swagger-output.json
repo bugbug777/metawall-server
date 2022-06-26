@@ -7,12 +7,6 @@
   },
   "host": "localhost:3000",
   "basePath": "/",
-  "tags": [
-    {
-      "name": "使用者",
-      "description": "端點"
-    }
-  ],
   "schemes": [
     "http",
     "https"
@@ -21,7 +15,7 @@
     "/users/sign_up": {
       "post": {
         "tags": [
-          "Users"
+          "Users - 會員功能"
         ],
         "description": "會員註冊",
         "parameters": [
@@ -31,26 +25,7 @@
             "description": "資料格式",
             "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "sihle"
-                },
-                "email": {
-                  "type": "string",
-                  "example": "gubug777@gmail.com"
-                },
-                "password": {
-                  "type": "string",
-                  "example": "qwe12345"
-                }
-              },
-              "required": [
-                "name",
-                "email",
-                "password"
-              ]
+              "$ref": "#/definitions/addUser"
             }
           }
         ],
@@ -58,29 +33,7 @@
           "200": {
             "description": "新增成功！",
             "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "example": "sihle"
-                    },
-                    "token": {
-                      "type": "string",
-                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjZkN2EyZTEyNWQ3YjNhYTBlYTdkYiIsImlhdCI6MTY1NjE0OTkyMywiZXhwIjoxNjU4NzQxOTIzfQ.J60uNuIFO2AIBciQbsayVjY6wCpHHYPjxMqnIIFxvsM"
-                    }
-                  }
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
+              "$ref": "#/definitions/registerSuccess"
             }
           }
         }
@@ -89,7 +42,7 @@
     "/users/sign_in": {
       "post": {
         "tags": [
-          "Users"
+          "Users - 會員功能"
         ],
         "description": "會員登入",
         "parameters": [
@@ -99,21 +52,7 @@
             "description": "資料格式",
             "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "type": "string",
-                  "example": "gubug777@gmail.com"
-                },
-                "password": {
-                  "type": "string",
-                  "example": "qwe12345"
-                }
-              },
-              "required": [
-                "email",
-                "password"
-              ]
+              "$ref": "#/definitions/userLogin"
             }
           }
         ],
@@ -121,29 +60,7 @@
           "200": {
             "description": "登入成功！",
             "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "example": "sihle"
-                    },
-                    "token": {
-                      "type": "string",
-                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjZkN2EyZTEyNWQ3YjNhYTBlYTdkYiIsImlhdCI6MTY1NjE0OTkyMywiZXhwIjoxNjU4NzQxOTIzfQ.J60uNuIFO2AIBciQbsayVjY6wCpHHYPjxMqnIIFxvsM"
-                    }
-                  }
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
+              "$ref": "#/definitions/loginSuccess"
             }
           }
         }
@@ -152,7 +69,7 @@
     "/users/profile": {
       "get": {
         "tags": [
-          "Users"
+          "Users - 會員功能"
         ],
         "description": "取得個人資料",
         "parameters": [],
@@ -160,58 +77,14 @@
           "200": {
             "description": "成功回傳！",
             "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "string",
-                      "example": "62b6d7a2e125d7b3aa0ea7db"
-                    },
-                    "name": {
-                      "type": "string",
-                      "example": "sihle"
-                    },
-                    "email": {
-                      "type": "string",
-                      "example": "gubug777@gmail.com"
-                    },
-                    "gender": {
-                      "type": "string",
-                      "example": "male"
-                    },
-                    "avatar": {
-                      "type": "string",
-                      "example": ""
-                    },
-                    "followers": {
-                      "type": "array",
-                      "example": [],
-                      "items": {}
-                    },
-                    "following": {
-                      "type": "array",
-                      "example": [],
-                      "items": {}
-                    }
-                  }
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
+              "$ref": "#/definitions/authSuccess"
             }
           }
         }
       },
       "patch": {
         "tags": [
-          "Users"
+          "Users - 會員功能"
         ],
         "description": "更新個人資料",
         "parameters": [
@@ -221,25 +94,7 @@
             "description": "資料格式",
             "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "sihle"
-                },
-                "gender": {
-                  "type": "string",
-                  "example": "male"
-                },
-                "avatar": {
-                  "type": "string",
-                  "example": ""
-                }
-              },
-              "required": [
-                "name",
-                "gender"
-              ]
+              "$ref": "#/definitions/updateProfile"
             }
           }
         ],
@@ -247,51 +102,7 @@
           "200": {
             "description": "更新成功！",
             "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "string",
-                      "example": "62b6d7a2e125d7b3aa0ea7db"
-                    },
-                    "name": {
-                      "type": "string",
-                      "example": "sihle"
-                    },
-                    "email": {
-                      "type": "string",
-                      "example": "gubug777@gmail.com"
-                    },
-                    "gender": {
-                      "type": "string",
-                      "example": "male"
-                    },
-                    "avatar": {
-                      "type": "string",
-                      "example": ""
-                    },
-                    "followers": {
-                      "type": "array",
-                      "example": [],
-                      "items": {}
-                    },
-                    "following": {
-                      "type": "array",
-                      "example": [],
-                      "items": {}
-                    }
-                  }
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
+              "$ref": "#/definitions/updateProfileSuccess"
             }
           }
         }
@@ -300,7 +111,7 @@
     "/users/updatePassword": {
       "post": {
         "tags": [
-          "Users"
+          "Users - 會員功能"
         ],
         "description": "更新個人資料",
         "parameters": [
@@ -310,27 +121,38 @@
             "description": "資料格式",
             "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "password": {
-                  "type": "string",
-                  "example": "qwe12345"
-                },
-                "confirmedPassword": {
-                  "type": "string",
-                  "example": "qwe12345"
-                }
-              },
-              "required": [
-                "password",
-                "confirmedPassword"
-              ]
+              "$ref": "#/definitions/updatePassword"
             }
           }
         ],
         "responses": {
           "200": {
             "description": "更新成功！",
+            "schema": {
+              "$ref": "#/definitions/updatePasswordSuccess"
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}/follow": {
+      "post": {
+        "tags": [
+          "Users - 好友按讚、追蹤"
+        ],
+        "description": "追蹤好友",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "使用者 ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功追蹤！",
             "schema": {
               "type": "object",
               "properties": {
@@ -341,13 +163,9 @@
                 "data": {
                   "type": "object",
                   "properties": {
-                    "name": {
+                    "message": {
                       "type": "string",
-                      "example": "sihle"
-                    },
-                    "token": {
-                      "type": "string",
-                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjZkN2EyZTEyNWQ3YjNhYTBlYTdkYiIsImlhdCI6MTY1NjE3MTQ5MCwiZXhwIjoxNjU4NzYzNDkwfQ.fPIKkdg1uMXVEtvEwD9e3k22hUo3M3KPYXxUfK-J_08"
+                      "example": "成功追蹤！"
                     }
                   }
                 }
@@ -360,29 +178,12 @@
         }
       }
     },
-    "/users/{id}/follow": {
-      "post": {
-        "tags": [
-          "Users"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {}
-      }
-    },
     "/users/{id}/unfollow": {
       "delete": {
         "tags": [
-          "Users"
+          "Users - 好友按讚、追蹤"
         ],
-        "description": "",
+        "description": "追蹤好友",
         "parameters": [
           {
             "name": "id",
@@ -391,64 +192,110 @@
             "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "成功取消追蹤！",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "成功取消追蹤！"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
     "/users/getLikeList": {
       "get": {
         "tags": [
-          "Users"
+          "Users - 好友按讚、追蹤"
         ],
-        "description": "",
+        "description": "追蹤好友",
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "成功取得按讚列表！",
+            "schema": {
+              "$ref": "#/definitions/getLikeList"
+            }
+          }
+        }
       }
     },
     "/users/following": {
       "get": {
         "tags": [
-          "Users"
+          "Users - 好友按讚、追蹤"
         ],
-        "description": "",
+        "description": "追蹤好友",
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "成功取得追蹤列表！",
+            "schema": {
+              "$ref": "#/definitions/getFollowingList"
+            }
+          }
+        }
       }
     },
     "/users/": {
       "get": {
         "tags": [
-          "Users"
+          "Users - 輔助測試"
         ],
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      },
-      "delete": {
-        "tags": [
-          "Users"
-        ],
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/users/google": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/users/google/callback": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "description": "",
+        "description": "取得所有使用者",
         "parameters": [],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "成功取得所有使用者！",
+            "schema": {
+              "$ref": "#/definitions/getUsers"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users - 輔助測試"
+        ],
+        "description": "刪除所有使用者",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功取得所有使用者！",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "example": [],
+                  "items": {}
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       }
@@ -456,7 +303,7 @@
     "/posts/": {
       "get": {
         "tags": [
-          "Posts"
+          "Posts - 貼文功能"
         ],
         "description": "",
         "parameters": [],
@@ -464,7 +311,7 @@
       },
       "post": {
         "tags": [
-          "Posts"
+          "Posts - 貼文功能"
         ],
         "description": "",
         "parameters": [],
@@ -472,7 +319,7 @@
       },
       "delete": {
         "tags": [
-          "Posts"
+          "Posts - 貼文功能"
         ],
         "description": "",
         "parameters": [],
@@ -482,7 +329,7 @@
     "/posts/{id}": {
       "get": {
         "tags": [
-          "Posts"
+          "Posts - 貼文功能"
         ],
         "description": "",
         "parameters": [
@@ -497,7 +344,7 @@
       },
       "patch": {
         "tags": [
-          "Posts"
+          "Posts - 貼文功能"
         ],
         "description": "",
         "parameters": [
@@ -514,7 +361,7 @@
     "/posts/{id}/like": {
       "post": {
         "tags": [
-          "Posts"
+          "Posts - 貼文功能"
         ],
         "description": "",
         "parameters": [
@@ -531,7 +378,7 @@
     "/posts/{id}/unlike": {
       "delete": {
         "tags": [
-          "Posts"
+          "Posts - 貼文功能"
         ],
         "description": "",
         "parameters": [
@@ -548,7 +395,7 @@
     "/posts/{id}/comment": {
       "post": {
         "tags": [
-          "Posts"
+          "Posts - 貼文功能"
         ],
         "description": "",
         "parameters": [
@@ -565,7 +412,7 @@
     "/posts/user/{id}": {
       "get": {
         "tags": [
-          "Posts"
+          "Posts - 貼文功能"
         ],
         "description": "",
         "parameters": [
@@ -582,11 +429,361 @@
     "/upload/": {
       "post": {
         "tags": [
-          "Upload"
+          "Upload - 圖片上傳"
         ],
         "description": "",
         "parameters": [],
         "responses": {}
+      }
+    }
+  },
+  "definitions": {
+    "addUser": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "sihle"
+        },
+        "email": {
+          "type": "string",
+          "example": "gubug777@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "qwe12345"
+        }
+      },
+      "required": [
+        "name",
+        "email",
+        "password"
+      ]
+    },
+    "registerSuccess": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "sihle"
+            },
+            "token": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjZkN2EyZTEyNWQ3YjNhYTBlYTdkYiIsImlhdCI6MTY1NjE0OTkyMywiZXhwIjoxNjU4NzQxOTIzfQ.J60uNuIFO2AIBciQbsayVjY6wCpHHYPjxMqnIIFxvsM"
+            }
+          }
+        }
+      }
+    },
+    "userLogin": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "gubug777@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "qwe12345"
+        }
+      },
+      "required": [
+        "email",
+        "password"
+      ]
+    },
+    "loginSuccess": {
+      "$ref": "#/definitions/registerSuccess"
+    },
+    "authSuccess": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "example": "62b6d7a2e125d7b3aa0ea7db"
+            },
+            "name": {
+              "type": "string",
+              "example": "sihle"
+            },
+            "email": {
+              "type": "string",
+              "example": "gubug777@gmail.com"
+            },
+            "gender": {
+              "type": "string",
+              "example": "male"
+            },
+            "avatar": {
+              "type": "string",
+              "example": ""
+            },
+            "followers": {
+              "type": "array",
+              "example": [],
+              "items": {}
+            },
+            "following": {
+              "type": "array",
+              "example": [],
+              "items": {}
+            }
+          }
+        }
+      }
+    },
+    "updateProfile": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "sihle"
+        },
+        "gender": {
+          "type": "string",
+          "example": "male"
+        },
+        "avatar": {
+          "type": "string",
+          "example": ""
+        }
+      },
+      "required": [
+        "name",
+        "gender"
+      ]
+    },
+    "updateProfileSuccess": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "example": "62b6d7a2e125d7b3aa0ea7db"
+            },
+            "name": {
+              "type": "string",
+              "example": "sihle"
+            },
+            "email": {
+              "type": "string",
+              "example": "gubug777@gmail.com"
+            },
+            "gender": {
+              "type": "string",
+              "example": "male"
+            },
+            "avatar": {
+              "type": "string",
+              "example": ""
+            },
+            "followers": {
+              "type": "array",
+              "example": [],
+              "items": {}
+            },
+            "following": {
+              "type": "array",
+              "example": [],
+              "items": {}
+            }
+          }
+        }
+      }
+    },
+    "updatePassword": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string",
+          "example": "qwe12345"
+        },
+        "confirmedPassword": {
+          "type": "string",
+          "example": "qwe12345"
+        }
+      },
+      "required": [
+        "password",
+        "confirmedPassword"
+      ]
+    },
+    "updatePasswordSuccess": {
+      "$ref": "#/definitions/registerSuccess"
+    },
+    "getLikeList": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "62b7bfde5958884ffb45af1e"
+              },
+              "user": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "example": "62b6d7a2e125d7b3aa0ea7db"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "sihle"
+                  }
+                }
+              },
+              "content": {
+                "type": "string",
+                "example": "The post is created by Sihle"
+              },
+              "photo": {
+                "type": "string",
+                "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
+              },
+              "likes": {
+                "type": "array",
+                "example": [
+                  "62b6d7a2e125d7b3aa0ea7db"
+                ],
+                "items": {
+                  "type": "string"
+                }
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2022-06-26T02:09:34.486Z"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getFollowingList": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "user": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "example": "62b72f22f56ed60ce3d0ea02"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "sihle12"
+                  }
+                }
+              },
+              "_id": {
+                "type": "string",
+                "example": "62b7bf1c5e439f74d01607e0"
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2022-06-26T02:06:20.467Z"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getUsers": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "62b6d7a2e125d7b3aa0ea7db"
+              },
+              "name": {
+                "type": "string",
+                "example": "sihle"
+              },
+              "email": {
+                "type": "string",
+                "example": "gubug777@gmail.com"
+              },
+              "gender": {
+                "type": "string",
+                "example": "male"
+              },
+              "avatar": {
+                "type": "string",
+                "example": ""
+              },
+              "followers": {
+                "type": "array",
+                "example": [],
+                "items": {}
+              },
+              "following": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "string",
+                      "example": "62b72f22f56ed60ce3d0ea02"
+                    },
+                    "_id": {
+                      "type": "string",
+                      "example": "62b7bf1c5e439f74d01607e0"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2022-06-26T02:06:20.467Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
