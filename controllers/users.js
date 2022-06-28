@@ -1,11 +1,11 @@
-const bcrypt = require('bcrypt');
-const validator = require('validator');
-const User = require('../models/UserModel');
-const Post = require('../models/PostModel');
-const appError = require('../service/appError');
-const asyncErrorHandler = require('../service/asyncErrorHandler');
-const successHandler = require('../service/successHandler');
-const { generateToken } = require('../service/auth');
+const bcrypt = require("bcrypt");
+const validator = require("validator");
+const User = require("../models/UserModel");
+const Post = require("../models/PostModel");
+const appError = require("../service/appError");
+const asyncErrorHandler = require("../service/asyncErrorHandler");
+const successHandler = require("../service/successHandler");
+const { generateToken } = require("../service/auth");
 
 //////
 //  輔助測試
@@ -31,47 +31,59 @@ const deleteUsers = asyncErrorHandler(async (req, res, next) => {
 const signUp = asyncErrorHandler(async (req, res, next) => {
   let { name, email, password } = req.body;
 
-  if (!name || !email || !password) return appError(400, '欄位資訊不能為空！', next);
-  if (!validator.isAlphanumeric(name)) return appError(400, '名稱只能是英數字的組合！', next);
-  if (!validator.isLength(name, { min: 2 })) return appError(400, '使用者暱稱長度必須為 2 個字元以上！', next);
-  if (!validator.isEmail(email)) return appError(400, 'Email 格式不符合！', next);
-  if (!validator.isAlphanumeric(password)) return appError(400, '密碼只能是英數字的組合！', next);
-  if (!validator.isLength(password, { min: 8, max: 16 })) return appError(400, '密碼長度只能介於 8 到 16 碼！', next);
+  if (!name || !email || !password)
+    return appError(400, "欄位資訊不能為空！", next);
+  if (!validator.isAlphanumeric(name))
+    return appError(400, "名稱只能是英數字的組合！", next);
+  if (!validator.isLength(name, { min: 2 }))
+    return appError(400, "使用者暱稱長度必須為 2 個字元以上！", next);
+  if (!validator.isEmail(email))
+    return appError(400, "Email 格式不符合！", next);
+  if (!validator.isAlphanumeric(password))
+    return appError(400, "密碼只能是英數字的組合！", next);
+  if (!validator.isLength(password, { min: 8, max: 16 }))
+    return appError(400, "密碼長度只能介於 8 到 16 碼！", next);
 
-  const isRegistered = await User.findOne({email: email});
-  if (isRegistered) return appError(400, '該電子信箱已被使用者註冊！', next);
+  const isRegistered = await User.findOne({ email: email });
+  if (isRegistered) return appError(400, "該電子信箱已被使用者註冊！", next);
 
   password = await bcrypt.hash(password, 12);
   const newUser = await User.create({
     name,
     email,
-    password
+    password,
   });
 
   const token = await generateToken(newUser);
 
-  successHandler(res, {
-    name: newUser.name,
-    token
-  }, 201);
+  res.status(201).json({
+    status: true,
+    user: {
+      name: newUser.name,
+      token,
+    },
+  });
 });
 
 // 登入會員
 const signIn = asyncErrorHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
-  if (!email || !password) return appError(400, '帳號密碼不能為空！', next);
-  const user = await User.findOne({ email }).select('+password');
+  if (!email || !password) return appError(400, "帳號密碼不能為空！", next);
+  const user = await User.findOne({ email }).select("+password");
 
-  if (!user) return appError(400, '帳號或密碼錯誤！', next);
+  if (!user) return appError(400, "帳號或密碼錯誤！", next);
   const isConfirmed = await bcrypt.compare(password, user.password);
 
-  if (!isConfirmed) return appError(400, '帳號或密碼錯誤！', next);
+  if (!isConfirmed) return appError(400, "帳號或密碼錯誤！", next);
   const token = await generateToken(user);
 
-  successHandler(res, {
-    name: user.name,
-    token
+  res.json({
+    status: true,
+    user: {
+      name: user.name,
+      token,
+    },
   });
 });
 
@@ -79,44 +91,55 @@ const signIn = asyncErrorHandler(async (req, res, next) => {
 const updatePassword = asyncErrorHandler(async (req, res, next) => {
   let { password, confirmedPassword } = req.body;
 
-  if (!validator.isAlphanumeric(password)) return appError(400, '密碼只能是英數字的組合！', next);
-  if (!validator.isLength(password, { min: 8, max: 16 })) return appError(400, '密碼長度只能介於 8 到 16 碼！', next);
-  if (!password || !confirmedPassword) return appError(400, '欄位資訊不能為空！', next);
-  if (!validator.isLength(password, { min: 8, max: 16 })) return appError(400, '密碼長度只能介於 8 到 16 碼！', next);
-  if (password !== confirmedPassword) return appError(400, '密碼不一致！', next);
+  if (!validator.isAlphanumeric(password))
+    return appError(400, "密碼只能是英數字的組合！", next);
+  if (!validator.isLength(password, { min: 8, max: 16 }))
+    return appError(400, "密碼長度只能介於 8 到 16 碼！", next);
+  if (!password || !confirmedPassword)
+    return appError(400, "欄位資訊不能為空！", next);
+  if (!validator.isLength(password, { min: 8, max: 16 }))
+    return appError(400, "密碼長度只能介於 8 到 16 碼！", next);
+  if (password !== confirmedPassword)
+    return appError(400, "密碼不一致！", next);
 
   password = await bcrypt.hash(password, 12);
-  const editedUser = await User.findByIdAndUpdate(
-    req.user._id,
-    { password }
-  );
+  const editedUser = await User.findByIdAndUpdate(req.user._id, { password });
 
   const token = await generateToken(editedUser);
 
-  successHandler(res, {
-    name: editedUser.name,
-    token
+  res.json({
+    status: true,
+    user: {
+      name: editedUser.name,
+      token,
+    },
   });
 });
 
 // 取得個人資料
 const getProfile = asyncErrorHandler(async (req, res, next) => {
   const user = req.user;
-  successHandler(res, user);
+  res.json({
+    status: true,
+    user,
+  });
 });
 
 // 更新個人資料
 const updateProfile = asyncErrorHandler(async (req, res, next) => {
   const { name, gender, avatar } = req.body;
 
-  if (!name || !gender) return appError(400, '欄位資訊不能為空！', next);
+  if (!name || !gender) return appError(400, "欄位資訊不能為空！", next);
   const editedUser = await User.findByIdAndUpdate(
     { _id: req.user._id },
     { name, gender, avatar },
     { new: true, runValidators: true }
   );
 
-  successHandler(res, editedUser);
+  res.json({
+    status: true,
+    user: editedUser,
+  });
 });
 
 //////
@@ -127,35 +150,41 @@ const updateProfile = asyncErrorHandler(async (req, res, next) => {
 const followUser = asyncErrorHandler(async (req, res, next) => {
   const followingUser = await User.findById(req.params.id);
 
-  if (!followingUser) return appError(400, '該使用者不存在！', next);
-  if (req.params.id === req.user.id) return appError(401, '使用者不允許追蹤自己！', next);
+  if (!followingUser) return appError(400, "該使用者不存在！", next);
+  if (req.params.id === req.user.id)
+    return appError(401, "使用者不允許追蹤自己！", next);
 
   // 使用者自己。 如果在 following.user 中有追蹤朋友的 id 就過濾掉
   await User.updateOne(
     {
       _id: req.user.id,
-      'following.user': { $ne: followingUser.id }
+      "following.user": { $ne: followingUser.id },
     },
     { $addToSet: { following: { user: followingUser.id } } }
   );
 
   // 追蹤的朋友。 如果在 followers.user 中有使用者自己的 id 就過濾掉
   await User.updateOne(
-    { 
+    {
       _id: followingUser.id,
-      'followers.user': { $ne: req.user.id }
+      "followers.user": { $ne: req.user.id },
     },
     { $addToSet: { followers: { user: req.user.id } } }
   );
-  successHandler(res, {message: '成功追蹤！'});
+
+  res.json({
+    status: true,
+    message: "成功追蹤！",
+  });
 });
 
 // 取消追蹤朋友
 const unfollowUser = asyncErrorHandler(async (req, res, next) => {
   const unFollowingUser = await User.findById(req.params.id);
-  if (!unFollowingUser) return appError(400, '該使用者不存在！', next);
+  if (!unFollowingUser) return appError(400, "該使用者不存在！", next);
 
-  if (unFollowingUser.id === req.user.id) return appError(401, '使用者不允許取消追蹤自己！');
+  if (unFollowingUser.id === req.user.id)
+    return appError(401, "使用者不允許取消追蹤自己！");
 
   // 使用者自己
   await User.updateOne(
@@ -168,31 +197,37 @@ const unfollowUser = asyncErrorHandler(async (req, res, next) => {
     { _id: unFollowingUser.id },
     { $pull: { followers: { user: req.user.id } } }
   );
-  successHandler(res, {message: '成功取消追蹤！'});
+
+  res.json({
+    status: true,
+    message: "成功取消追蹤！",
+  });
 });
 
 // 取得個人按讚列表
 const getLikeList = asyncErrorHandler(async (req, res, next) => {
-  const likeList = await Post
-  .find({ likes: { $in: [req.user.id] } })
-  .populate({
-    path: 'user',
-    select: '_id name'
-  })
+  const likeList = await Post.find({ likes: { $in: [req.user.id] } }).populate({
+    path: "user",
+    select: "_id name",
+  });
 
-  successHandler(res, likeList);
+  res.json({
+    status: true,
+    posts: likeList,
+  });
 });
 
 // 取得個人追蹤名單
 const getFollowingList = asyncErrorHandler(async (req, res, next) => {
-  const user = await User
-  .findById(req.user.id)
-  .populate({
-    path: 'following.user',
-    select: 'name id'
+  const user = await User.findById(req.user.id).populate({
+    path: "following.user",
+    select: "name id",
   });
 
-  successHandler(res, user.following);
+  res.json({
+    status: true,
+    users: user.following,
+  });
 });
 
 module.exports = {
@@ -206,5 +241,5 @@ module.exports = {
   followUser,
   unfollowUser,
   getLikeList,
-  getFollowingList
-}
+  getFollowingList,
+};
