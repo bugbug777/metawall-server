@@ -20,6 +20,28 @@
     }
   },
   "paths": {
+    "/users/check": {
+      "get": {
+        "tags": [
+          "Users - 授權檢查"
+        ],
+        "description": "檢查登入狀態",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "授權驗證成功！",
+            "schema": {
+              "$ref": "#/definitions/getFollowingList"
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/users/sign_up": {
       "post": {
         "tags": [
@@ -79,7 +101,7 @@
         "tags": [
           "Users - 會員功能"
         ],
-        "description": "取得個人資料",
+        "description": "取得登入會員個人資料",
         "parameters": [],
         "responses": {
           "200": {
@@ -126,6 +148,35 @@
         ]
       }
     },
+    "/users/profile/{id}": {
+      "get": {
+        "tags": [
+          "Users - 會員功能"
+        ],
+        "description": "取得使用者個人資料",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功回傳！",
+            "schema": {
+              "$ref": "#/definitions/authSuccess"
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/users/updatePassword": {
       "post": {
         "tags": [
@@ -148,6 +199,50 @@
             "description": "更新成功！",
             "schema": {
               "$ref": "#/definitions/updatePasswordSuccess"
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/users/getLikeList": {
+      "get": {
+        "tags": [
+          "Users - 好友按讚、追蹤"
+        ],
+        "description": "追蹤好友",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功取得按讚列表！",
+            "schema": {
+              "$ref": "#/definitions/getLikeList"
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/users/following": {
+      "get": {
+        "tags": [
+          "Users - 好友按讚、追蹤"
+        ],
+        "description": "追蹤好友",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功取得追蹤列表！",
+            "schema": {
+              "$ref": "#/definitions/getFollowingList"
             }
           }
         },
@@ -211,7 +306,7 @@
         "tags": [
           "Users - 好友按讚、追蹤"
         ],
-        "description": "追蹤好友",
+        "description": "取消追蹤好友",
         "parameters": [
           {
             "name": "id",
@@ -251,96 +346,6 @@
             "apiKeyAuth": []
           }
         ]
-      }
-    },
-    "/users/getLikeList": {
-      "get": {
-        "tags": [
-          "Users - 好友按讚、追蹤"
-        ],
-        "description": "追蹤好友",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "成功取得按讚列表！",
-            "schema": {
-              "$ref": "#/definitions/getLikeList"
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/users/following": {
-      "get": {
-        "tags": [
-          "Users - 好友按讚、追蹤"
-        ],
-        "description": "追蹤好友",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "成功取得追蹤列表！",
-            "schema": {
-              "$ref": "#/definitions/getFollowingList"
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/users/": {
-      "get": {
-        "tags": [
-          "Users - 輔助測試"
-        ],
-        "description": "取得所有使用者",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "成功取得所有使用者！",
-            "schema": {
-              "$ref": "#/definitions/getUsers"
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Users - 輔助測試"
-        ],
-        "description": "刪除所有使用者",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "成功取得所有使用者！",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                },
-                "data": {
-                  "type": "array",
-                  "example": [],
-                  "items": {}
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        }
       }
     },
     "/posts/": {
@@ -393,40 +398,6 @@
             "apiKeyAuth": []
           }
         ]
-      },
-      "delete": {
-        "tags": [
-          "Posts - 輔助測試"
-        ],
-        "description": "刪除所有貼文",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "新增成功！",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                },
-                "data": {
-                  "type": "array",
-                  "example": [],
-                  "items": {}
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
       }
     },
     "/posts/{id}": {
@@ -460,7 +431,7 @@
       },
       "patch": {
         "tags": [
-          "Posts - 輔助測試"
+          "Posts - 貼文功能"
         ],
         "description": "編輯單筆貼文",
         "parameters": [
@@ -507,7 +478,7 @@
     "/posts/{id}/like": {
       "post": {
         "tags": [
-          "Posts - 貼文功能"
+          "Posts - 貼文按讚、留言"
         ],
         "description": "新增貼文按讚",
         "parameters": [
@@ -537,7 +508,7 @@
     "/posts/{id}/unlike": {
       "delete": {
         "tags": [
-          "Posts - 貼文功能"
+          "Posts - 貼文按讚、留言"
         ],
         "description": "移除貼文按讚",
         "parameters": [
@@ -564,10 +535,40 @@
         ]
       }
     },
+    "/posts/user/{id}": {
+      "get": {
+        "tags": [
+          "Posts - 貼文按讚、留言"
+        ],
+        "description": "取得個人所有貼文",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "使用者 ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "新增成功！",
+            "schema": {
+              "$ref": "#/definitions/getPersonalPostsSuccess"
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/posts/{id}/comment": {
       "post": {
         "tags": [
-          "Posts - 貼文功能"
+          "Posts - 貼文按讚、留言"
         ],
         "description": "新增一筆貼文留言",
         "parameters": [
@@ -601,36 +602,6 @@
             "description": "新增成功！",
             "schema": {
               "$ref": "#/definitions/addCommentSuccess"
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/posts/user/{id}": {
-      "get": {
-        "tags": [
-          "Posts - 貼文功能"
-        ],
-        "description": "取得個人所有貼文",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "使用者 ID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "新增成功！",
-            "schema": {
-              "$ref": "#/definitions/getPersonalPostsSuccess"
             }
           }
         },

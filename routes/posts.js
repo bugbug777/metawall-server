@@ -54,11 +54,35 @@ router.post(
     }
   */
 );
+router.patch(
+  "/:id",
+  checkAuth,
+  PostController.editPost
+  /*
+    #swagger.security = [{ 'apiKeyAuth': [] }]
+    #swagger.description = '編輯單筆貼文'
+    #swagger.parameters = {
+      in: 'body',
+      description: '資料格式',
+      required: true,
+      schema: {
+        $content: "修改過的貼文！"
+      }
+    }
+    #swagger.responses[200] = {
+      description: '修改成功！',
+      schema: { $ref: '#/definitions/editPostSuccess' }
+    }
+  */
+);
+
+// 貼文按讚、留言
 router.post(
   "/:id/like",
   checkAuth,
   PostController.addLike
   /*
+    #swagger.tags = ['Posts - 貼文按讚、留言']
     #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.description = '新增貼文按讚'
     #swagger.parameters['id'] = {
@@ -77,6 +101,7 @@ router.delete(
   checkAuth,
   PostController.removeLike
   /*
+    #swagger.tags = ['Posts - 貼文按讚、留言']
     #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.description = '移除貼文按讚'
     #swagger.parameters['id'] = {
@@ -90,11 +115,31 @@ router.delete(
     }
   */
 );
+router.get(
+  "/user/:id",
+  checkAuth,
+  PostController.getPersonalPosts
+  /*
+    #swagger.tags = ['Posts - 貼文按讚、留言']
+    #swagger.security = [{ 'apiKeyAuth': [] }]
+    #swagger.description = '取得個人所有貼文'
+    #swagger.parameters['id'] = {
+      in: 'path',
+      description: '使用者 ID',
+      required: true,
+    }
+    #swagger.responses[200] = {
+      description: '新增成功！',
+      schema: { $ref: '#/definitions/getPersonalPostsSuccess' }
+    }
+  */
+);
 router.post(
   "/:id/comment",
   checkAuth,
   PostController.addComment
   /*
+    #swagger.tags = ['Posts - 貼文按讚、留言']
     #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.description = '新增一筆貼文留言'
     #swagger.parameters = {
@@ -109,52 +154,13 @@ router.post(
     }
   */
 );
-router.get(
-  "/user/:id",
-  checkAuth,
-  PostController.getPersonalPosts
-  /*
-    #swagger.security = [{ 'apiKeyAuth': [] }]
-    #swagger.description = '取得個人所有貼文'
-    #swagger.parameters['id'] = {
-      in: 'path',
-      description: '使用者 ID',
-      required: true,
-    }
-    #swagger.responses[200] = {
-      description: '新增成功！',
-      schema: { $ref: '#/definitions/getPersonalPostsSuccess' }
-    }
-  */
-);
 
-// 輔助測試
-router.patch(
-  "/:id",
-  checkAuth,
-  PostController.editPost
-  /*
-    #swagger.security = [{ 'apiKeyAuth': [] }]
-    #swagger.tags = ['Posts - 輔助測試']
-    #swagger.description = '編輯單筆貼文'
-    #swagger.parameters = {
-      in: 'body',
-      description: '資料格式',
-      required: true,
-      schema: {
-        $content: "修改過的貼文！"
-      }
-    }
-    #swagger.responses[200] = {
-      description: '修改成功！',
-      schema: { $ref: '#/definitions/editPostSuccess' }
-    }
-  */
-);
+// 後台貼文管理
 router.delete(
   "/",
   PostController.deletePosts
   /*
+    #swagger.ignore = true
     #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.tags = ['Posts - 輔助測試']
     #swagger.description = '刪除所有貼文'

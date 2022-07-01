@@ -4,6 +4,21 @@ const { checkAuth } = require("../service/auth");
 const UserController = require("../controllers/users");
 
 /* GET users listing. */
+// 權限驗證
+router.get(
+  "/check",
+  checkAuth,
+  UserController.checkAuth
+  /*
+    #swagger.security = [{ 'apiKeyAuth': [] }]
+    #swagger.tags = ['Users - 授權檢查']
+    #swagger.description = '檢查登入狀態'
+    #swagger.responses[200] = {
+      description: '授權驗證成功！',
+      schema: { $ref: '#/definitions/getFollowingList' }
+    }
+  */
+);
 // 會員功能
 router.post(
   "/sign_up",
@@ -45,7 +60,7 @@ router.get(
   UserController.getProfile
   /*
     #swagger.security = [{ 'apiKeyAuth': [] }]
-    #swagger.description = '取得個人資料'
+    #swagger.description = '取得登入會員個人資料'
     #swagger.responses[200] = {
       description: '成功回傳！',
       schema: { $ref: '#/definitions/authSuccess' }
@@ -58,7 +73,7 @@ router.get(
   UserController.getUserProfile
   /*
     #swagger.security = [{ 'apiKeyAuth': [] }]
-    #swagger.description = '取得個人資料'
+    #swagger.description = '取得使用者個人資料'
     #swagger.responses[200] = {
       description: '成功回傳！',
       schema: { $ref: '#/definitions/authSuccess' }
@@ -105,6 +120,34 @@ router.post(
 );
 
 // 會員按讚追蹤動態
+router.get(
+  "/getLikeList",
+  checkAuth,
+  UserController.getLikeList
+  /*
+    #swagger.security = [{ 'apiKeyAuth': [] }]
+    #swagger.tags = ['Users - 好友按讚、追蹤']
+    #swagger.description = '追蹤好友'
+    #swagger.responses[200] = {
+      description: '成功取得按讚列表！',
+      schema: { $ref: '#/definitions/getLikeList' }
+    }
+  */
+);
+router.get(
+  "/following",
+  checkAuth,
+  UserController.getFollowingList
+  /*
+    #swagger.security = [{ 'apiKeyAuth': [] }]
+    #swagger.tags = ['Users - 好友按讚、追蹤']
+    #swagger.description = '追蹤好友'
+    #swagger.responses[200] = {
+      description: '成功取得追蹤列表！',
+      schema: { $ref: '#/definitions/getFollowingList' }
+    }
+  */
+);
 router.post(
   "/:id/follow",
   checkAuth,
@@ -136,7 +179,7 @@ router.delete(
   /*
     #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.tags = ['Users - 好友按讚、追蹤']
-    #swagger.description = '追蹤好友'
+    #swagger.description = '取消追蹤好友'
     #swagger.responses[200] = {
       description: '成功取消追蹤！',
       schema: {
@@ -148,55 +191,16 @@ router.delete(
     }
   */
 );
-router.get(
-  "/getLikeList",
-  checkAuth,
-  UserController.getLikeList
-  /*
-    #swagger.security = [{ 'apiKeyAuth': [] }]
-    #swagger.tags = ['Users - 好友按讚、追蹤']
-    #swagger.description = '追蹤好友'
-    #swagger.responses[200] = {
-      description: '成功取得按讚列表！',
-      schema: { $ref: '#/definitions/getLikeList' }
-    }
-  */
-);
-router.get(
-  "/following",
-  checkAuth,
-  UserController.getFollowingList
-  /*
-    #swagger.security = [{ 'apiKeyAuth': [] }]
-    #swagger.tags = ['Users - 好友按讚、追蹤']
-    #swagger.description = '追蹤好友'
-    #swagger.responses[200] = {
-      description: '成功取得追蹤列表！',
-      schema: { $ref: '#/definitions/getFollowingList' }
-    }
-  */
-);
-router.get(
-  "/check",
-  checkAuth,
-  UserController.checkAuth
-  /*
-    #swagger.security = [{ 'apiKeyAuth': [] }]
-    #swagger.tags = ['Users - 授權檢查']
-    #swagger.description = '檢查登入狀態'
-    #swagger.responses[200] = {
-      description: '授權驗證成功！',
-      schema: { $ref: '#/definitions/getFollowingList' }
-    }
-  */
-);
 
-// 輔助測試
+
+
+// 後台會員管理
 router.get(
   "/",
   UserController.getUsers
   /*
-    #swagger.tags = ['Users - 輔助測試']
+    #swagger.ignore = true
+    #swagger.tags = ['Users - 後台會員管理']
     #swagger.description = '取得所有使用者'
     #swagger.responses[200] = {
       description: '成功取得所有使用者！',
@@ -208,7 +212,8 @@ router.delete(
   "/",
   UserController.deleteUsers
   /*
-    #swagger.tags = ['Users - 輔助測試']
+    #swagger.ignore = true
+    #swagger.tags = ['Users - 後台會員管理']
     #swagger.description = '刪除所有使用者'
     #swagger.responses[200] = {
       description: '成功取得所有使用者！',

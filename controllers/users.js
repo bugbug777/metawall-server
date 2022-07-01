@@ -206,7 +206,7 @@ const unfollowUser = asyncErrorHandler(async (req, res, next) => {
   if (!unFollowingUser) return appError(400, "該使用者不存在！", next);
 
   if (unFollowingUser.id === req.user.id)
-    return appError(401, "使用者不允許取消追蹤自己！");
+    return appError(401, "使用者不允許取消追蹤自己！", next);
 
   // 使用者自己
   await User.updateOne(
