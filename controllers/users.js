@@ -5,7 +5,7 @@ const Post = require("../models/PostModel");
 const appError = require("../service/appError");
 const asyncErrorHandler = require("../service/asyncErrorHandler");
 const successHandler = require("../service/successHandler");
-const { generateToken } = require("../service/auth");
+const { generateToken, verifyToken } = require("../service/auth");
 
 //////
 //  輔助測試
@@ -26,6 +26,16 @@ const deleteUsers = asyncErrorHandler(async (req, res, next) => {
 //////
 //  會員功能
 ////
+
+// 登入授權驗證
+const checkAuth = asyncErrorHandler(async (req, res, next) => {
+  const { _id, name, avatar } = req.user;
+
+  res.json({
+    status: true,
+    user: { _id, name, avatar }
+  });
+});
 
 // 註冊會員
 const signUp = asyncErrorHandler(async (req, res, next) => {
@@ -119,6 +129,18 @@ const updatePassword = asyncErrorHandler(async (req, res, next) => {
 // 取得個人資料
 const getProfile = asyncErrorHandler(async (req, res, next) => {
   const user = req.user;
+
+  res.json({
+    status: true,
+    user,
+  });
+});
+
+// 取得使用者個人資料
+const getUserProfile = asyncErrorHandler(async (req, res, next) => {
+  const { id } = req.params;
+  const user = await User.findById(id);
+  
   res.json({
     status: true,
     user,
@@ -208,7 +230,7 @@ const unfollowUser = asyncErrorHandler(async (req, res, next) => {
 const getLikeList = asyncErrorHandler(async (req, res, next) => {
   const likeList = await Post.find({ likes: { $in: [req.user.id] } }).populate({
     path: "user",
-    select: "_id name",
+    select: "name avatar",
   });
 
   res.json({
@@ -221,7 +243,7 @@ const getLikeList = asyncErrorHandler(async (req, res, next) => {
 const getFollowingList = asyncErrorHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id).populate({
     path: "following.user",
-    select: "name id",
+    select: "name avatar",
   });
 
   res.json({
@@ -233,9 +255,11 @@ const getFollowingList = asyncErrorHandler(async (req, res, next) => {
 module.exports = {
   getUsers,
   deleteUsers,
+  checkAuth,
   signUp,
   signIn,
   getProfile,
+  getUserProfile,
   updateProfile,
   updatePassword,
   followUser,

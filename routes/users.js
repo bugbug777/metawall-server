@@ -52,6 +52,19 @@ router.get(
     }
   */
 );
+router.get(
+  "/profile/:id",
+  checkAuth,
+  UserController.getUserProfile
+  /*
+    #swagger.security = [{ 'apiKeyAuth': [] }]
+    #swagger.description = '取得個人資料'
+    #swagger.responses[200] = {
+      description: '成功回傳！',
+      schema: { $ref: '#/definitions/authSuccess' }
+    }
+  */
+);
 router.patch(
   "/profile",
   checkAuth,
@@ -159,6 +172,20 @@ router.get(
     #swagger.description = '追蹤好友'
     #swagger.responses[200] = {
       description: '成功取得追蹤列表！',
+      schema: { $ref: '#/definitions/getFollowingList' }
+    }
+  */
+);
+router.get(
+  "/check",
+  checkAuth,
+  UserController.checkAuth
+  /*
+    #swagger.security = [{ 'apiKeyAuth': [] }]
+    #swagger.tags = ['Users - 授權檢查']
+    #swagger.description = '檢查登入狀態'
+    #swagger.responses[200] = {
+      description: '授權驗證成功！',
       schema: { $ref: '#/definitions/getFollowingList' }
     }
   */

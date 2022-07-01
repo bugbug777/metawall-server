@@ -4,7 +4,7 @@ const multer = require('multer');
 // 檢驗檔案格式
 const checkFile = multer({
   limits: {
-    fileSize: 2*1024*1024, // 2MB
+    fileSize: 1*1024*1024, // 1MB
   },
   fileFilter(req, file, cb) {
     const ext = path.extname(file.originalname).toLowerCase();
@@ -16,7 +16,7 @@ const checkFile = multer({
     }
     cb(null, true);
   },
-}).any();
+}).single('image');
 
 module.exports = {
   checkFile,
