@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
-      default: ''
+      default: 'https://i.imgur.com/uFT7s7e.jpg'
     },
     followers: [
       {

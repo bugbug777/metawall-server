@@ -11,7 +11,7 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: [true, '貼文內容為必填']
     },
-    photo: {
+    imageUrl: {
       type: String,
       default: ''
     },

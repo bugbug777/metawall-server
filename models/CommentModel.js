@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const commentSchema = new mongoose.Schema(
   {
-    comment: {
+    content: {
       type: String,
       required: [true, '留言內容為必填！']
     },
@@ -29,7 +29,7 @@ const commentSchema = new mongoose.Schema(
 commentSchema.pre(/^find/, function(next) {
   this.populate({
     path: 'user',
-    select: 'name id createdAt'
+    select: 'id name avatar createdAt'
   });
 
   next();
