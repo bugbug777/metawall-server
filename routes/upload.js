@@ -21,7 +21,7 @@ router.post(
     #swagger.responses[200] = {
       description: '上傳成功！',
       schema: {
-        status: "success",
+        status: true,
         data: "https://i.imgur.com/DfBOYlv.jpg"
       }
     }
