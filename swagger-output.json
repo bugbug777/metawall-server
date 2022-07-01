@@ -5,10 +5,9 @@
     "description": "Metawall RESTful API Docs.",
     "version": "1.0.0"
   },
-  "host": "https://enigmatic-thicket-59722.herokuapp.com",
+  "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
-    "https",
     "http"
   ],
   "securityDefinitions": {
@@ -31,7 +30,7 @@
           "200": {
             "description": "授權驗證成功！",
             "schema": {
-              "$ref": "#/definitions/getFollowingList"
+              "$ref": "#/definitions/userSchema"
             }
           }
         },
@@ -55,7 +54,7 @@
             "description": "資料格式",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/addUser"
+              "$ref": "#/definitions/registerParams"
             }
           }
         ],
@@ -63,7 +62,7 @@
           "200": {
             "description": "新增成功！",
             "schema": {
-              "$ref": "#/definitions/registerSuccess"
+              "$ref": "#/definitions/userTokenSchema"
             }
           }
         }
@@ -82,7 +81,7 @@
             "description": "資料格式",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/userLogin"
+              "$ref": "#/definitions/signinParams"
             }
           }
         ],
@@ -90,7 +89,7 @@
           "200": {
             "description": "登入成功！",
             "schema": {
-              "$ref": "#/definitions/loginSuccess"
+              "$ref": "#/definitions/userTokenSchema"
             }
           }
         }
@@ -107,7 +106,7 @@
           "200": {
             "description": "成功回傳！",
             "schema": {
-              "$ref": "#/definitions/authSuccess"
+              "$ref": "#/definitions/profileSchema"
             }
           }
         },
@@ -129,7 +128,7 @@
             "description": "資料格式",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/updateProfile"
+              "$ref": "#/definitions/updateProfileParams"
             }
           }
         ],
@@ -137,7 +136,7 @@
           "200": {
             "description": "更新成功！",
             "schema": {
-              "$ref": "#/definitions/updateProfileSuccess"
+              "$ref": "#/definitions/profileSchema"
             }
           }
         },
@@ -166,7 +165,7 @@
           "200": {
             "description": "成功回傳！",
             "schema": {
-              "$ref": "#/definitions/authSuccess"
+              "$ref": "#/definitions/profileResponse"
             }
           }
         },
@@ -190,7 +189,7 @@
             "description": "資料格式",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/updatePassword"
+              "$ref": "#/definitions/updatePasswordParams"
             }
           }
         ],
@@ -198,7 +197,7 @@
           "200": {
             "description": "更新成功！",
             "schema": {
-              "$ref": "#/definitions/updatePasswordSuccess"
+              "$ref": "#/definitions/userTokenSchema"
             }
           }
         },
@@ -220,7 +219,7 @@
           "200": {
             "description": "成功取得按讚列表！",
             "schema": {
-              "$ref": "#/definitions/getLikeList"
+              "$ref": "#/definitions/postsSchema"
             }
           }
         },
@@ -242,7 +241,7 @@
           "200": {
             "description": "成功取得追蹤列表！",
             "schema": {
-              "$ref": "#/definitions/getFollowingList"
+              "$ref": "#/definitions/followingUsersSchema"
             }
           }
         },
@@ -264,8 +263,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "使用者 ID"
+            "type": "string"
           }
         ],
         "responses": {
@@ -275,8 +273,8 @@
               "type": "object",
               "properties": {
                 "status": {
-                  "type": "string",
-                  "example": "success"
+                  "type": "boolean",
+                  "example": true
                 },
                 "data": {
                   "type": "object",
@@ -322,8 +320,8 @@
               "type": "object",
               "properties": {
                 "status": {
-                  "type": "string",
-                  "example": "success"
+                  "type": "boolean",
+                  "example": true
                 },
                 "data": {
                   "type": "object",
@@ -359,7 +357,7 @@
           "200": {
             "description": "成功回傳！",
             "schema": {
-              "$ref": "#/definitions/getPosts"
+              "$ref": "#/definitions/postsSchema"
             }
           }
         },
@@ -381,7 +379,7 @@
             "description": "資料格式",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/addPost"
+              "$ref": "#/definitions/postParams"
             }
           }
         ],
@@ -389,7 +387,7 @@
           "200": {
             "description": "新增成功！",
             "schema": {
-              "$ref": "#/definitions/addPostSuccess"
+              "$ref": "#/definitions/newPostSchema"
             }
           }
         },
@@ -419,7 +417,7 @@
           "200": {
             "description": "成功回傳！",
             "schema": {
-              "$ref": "#/definitions/getPost"
+              "$ref": "#/definitions/postSchema"
             }
           }
         },
@@ -451,7 +449,7 @@
               "properties": {
                 "content": {
                   "type": "string",
-                  "example": "修改過的貼文！"
+                  "example": "The post is created by Sihle"
                 }
               },
               "required": [
@@ -464,7 +462,7 @@
           "200": {
             "description": "修改成功！",
             "schema": {
-              "$ref": "#/definitions/editPostSuccess"
+              "$ref": "#/definitions/newPostSchema"
             }
           }
         },
@@ -486,15 +484,14 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "貼文 ID"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "成功按讚！",
             "schema": {
-              "$ref": "#/definitions/addLikeSuccess"
+              "$ref": "#/definitions/likePostSchema"
             }
           }
         },
@@ -516,15 +513,14 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "貼文 ID"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "成功取消按讚！",
             "schema": {
-              "$ref": "#/definitions/unlikeSuccess"
+              "$ref": "#/definitions/likePostSchema"
             }
           }
         },
@@ -554,7 +550,7 @@
           "200": {
             "description": "新增成功！",
             "schema": {
-              "$ref": "#/definitions/getPersonalPostsSuccess"
+              "$ref": "#/definitions/postSchema"
             }
           }
         },
@@ -601,7 +597,7 @@
           "200": {
             "description": "新增成功！",
             "schema": {
-              "$ref": "#/definitions/addCommentSuccess"
+              "$ref": "#/definitions/commentSchema"
             }
           }
         },
@@ -657,7 +653,7 @@
     }
   },
   "definitions": {
-    "addUser": {
+    "registerParams": {
       "type": "object",
       "properties": {
         "name": {
@@ -679,29 +675,7 @@
         "password"
       ]
     },
-    "registerSuccess": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "type": "string",
-          "example": "success"
-        },
-        "data": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "example": "sihle"
-            },
-            "token": {
-              "type": "string",
-              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjZkN2EyZTEyNWQ3YjNhYTBlYTdkYiIsImlhdCI6MTY1NjE0OTkyMywiZXhwIjoxNjU4NzQxOTIzfQ.J60uNuIFO2AIBciQbsayVjY6wCpHHYPjxMqnIIFxvsM"
-            }
-          }
-        }
-      }
-    },
-    "userLogin": {
+    "signinParams": {
       "type": "object",
       "properties": {
         "email": {
@@ -718,54 +692,7 @@
         "password"
       ]
     },
-    "loginSuccess": {
-      "$ref": "#/definitions/registerSuccess"
-    },
-    "authSuccess": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "type": "string",
-          "example": "success"
-        },
-        "data": {
-          "type": "object",
-          "properties": {
-            "_id": {
-              "type": "string",
-              "example": "62b6d7a2e125d7b3aa0ea7db"
-            },
-            "name": {
-              "type": "string",
-              "example": "sihle"
-            },
-            "email": {
-              "type": "string",
-              "example": "gubug777@gmail.com"
-            },
-            "gender": {
-              "type": "string",
-              "example": "male"
-            },
-            "avatar": {
-              "type": "string",
-              "example": ""
-            },
-            "followers": {
-              "type": "array",
-              "example": [],
-              "items": {}
-            },
-            "following": {
-              "type": "array",
-              "example": [],
-              "items": {}
-            }
-          }
-        }
-      }
-    },
-    "updateProfile": {
+    "updateProfileParams": {
       "type": "object",
       "properties": {
         "name": {
@@ -786,14 +713,95 @@
         "gender"
       ]
     },
-    "updateProfileSuccess": {
+    "updatePasswordParams": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string",
+          "example": "qwe12345"
+        },
+        "confirmedPassword": {
+          "type": "string",
+          "example": "qwe12345"
+        }
+      },
+      "required": [
+        "password",
+        "confirmedPassword"
+      ]
+    },
+    "postParams": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "example": "The post is created by Sihle"
+        },
+        "photo": {
+          "type": "string",
+          "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80"
+        }
+      },
+      "required": [
+        "content"
+      ]
+    },
+    "userSchema": {
       "type": "object",
       "properties": {
         "status": {
-          "type": "string",
-          "example": "success"
+          "type": "boolean",
+          "example": true
         },
-        "data": {
+        "user": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "example": "62bbaacc9e32281c5465543a"
+            },
+            "name": {
+              "type": "string",
+              "example": "Sihle"
+            },
+            "avatar": {
+              "type": "string",
+              "example": "https://i.imgur.com/cowpqg2.jpg"
+            }
+          }
+        }
+      }
+    },
+    "userTokenSchema": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "example": true
+        },
+        "user": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "sihle"
+            },
+            "token": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjZkN2EyZTEyNWQ3YjNhYTBlYTdkYiIsImlhdCI6MTY1NjE0OTkyMywiZXhwIjoxNjU4NzQxOTIzfQ.J60uNuIFO2AIBciQbsayVjY6wCpHHYPjxMqnIIFxvsM"
+            }
+          }
+        }
+      }
+    },
+    "profileSchema": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "example": true
+        },
+        "user": {
           "type": "object",
           "properties": {
             "_id": {
@@ -830,34 +838,14 @@
         }
       }
     },
-    "updatePassword": {
-      "type": "object",
-      "properties": {
-        "password": {
-          "type": "string",
-          "example": "qwe12345"
-        },
-        "confirmedPassword": {
-          "type": "string",
-          "example": "qwe12345"
-        }
-      },
-      "required": [
-        "password",
-        "confirmedPassword"
-      ]
-    },
-    "updatePasswordSuccess": {
-      "$ref": "#/definitions/registerSuccess"
-    },
-    "getLikeList": {
+    "postsSchema": {
       "type": "object",
       "properties": {
         "status": {
-          "type": "string",
-          "example": "success"
+          "type": "boolean",
+          "example": true
         },
-        "data": {
+        "posts": {
           "type": "array",
           "items": {
             "type": "object",
@@ -899,20 +887,25 @@
               "createdAt": {
                 "type": "string",
                 "example": "2022-06-26T02:09:34.486Z"
+              },
+              "comments": {
+                "type": "array",
+                "example": [],
+                "items": {}
               }
             }
           }
         }
       }
     },
-    "getFollowingList": {
+    "followingUsersSchema": {
       "type": "object",
       "properties": {
         "status": {
-          "type": "string",
-          "example": "success"
+          "type": "boolean",
+          "example": true
         },
-        "data": {
+        "users": {
           "type": "array",
           "items": {
             "type": "object",
@@ -922,35 +915,39 @@
                 "properties": {
                   "_id": {
                     "type": "string",
-                    "example": "62b72f22f56ed60ce3d0ea02"
+                    "example": "62bdff925ca6daaa1dad266c"
                   },
                   "name": {
                     "type": "string",
-                    "example": "sihle12"
+                    "example": "Laura"
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "example": "https://i.imgur.com/uFT7s7e.jpg"
                   }
                 }
               },
               "_id": {
                 "type": "string",
-                "example": "62b7bf1c5e439f74d01607e0"
+                "example": "62be026a5ca6daaa1dad2754"
               },
               "createdAt": {
                 "type": "string",
-                "example": "2022-06-26T02:06:20.467Z"
+                "example": "2022-06-30T20:07:06.400Z"
               }
             }
           }
         }
       }
     },
-    "getUsers": {
+    "usersSchema": {
       "type": "object",
       "properties": {
         "status": {
-          "type": "string",
-          "example": "success"
+          "type": "boolean",
+          "example": true
         },
-        "data": {
+        "users": {
           "type": "array",
           "items": {
             "type": "object",
@@ -1005,74 +1002,14 @@
         }
       }
     },
-    "getPosts": {
+    "postSchema": {
       "type": "object",
       "properties": {
         "status": {
-          "type": "string",
-          "example": "success"
+          "type": "boolean",
+          "example": true
         },
-        "data": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "_id": {
-                "type": "string",
-                "example": "62b7bfde5958884ffb45af1e"
-              },
-              "user": {
-                "type": "object",
-                "properties": {
-                  "_id": {
-                    "type": "string",
-                    "example": "62b6d7a2e125d7b3aa0ea7db"
-                  },
-                  "name": {
-                    "type": "string",
-                    "example": "sihle"
-                  }
-                }
-              },
-              "content": {
-                "type": "string",
-                "example": "The post is created by Sihle"
-              },
-              "photo": {
-                "type": "string",
-                "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
-              },
-              "likes": {
-                "type": "array",
-                "example": [
-                  "62b6d7a2e125d7b3aa0ea7db"
-                ],
-                "items": {
-                  "type": "string"
-                }
-              },
-              "createdAt": {
-                "type": "string",
-                "example": "2022-06-26T02:09:34.486Z"
-              },
-              "comments": {
-                "type": "array",
-                "example": [],
-                "items": {}
-              }
-            }
-          }
-        }
-      }
-    },
-    "getPost": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "type": "string",
-          "example": "success"
-        },
-        "data": {
+        "post": {
           "type": "object",
           "properties": {
             "_id": {
@@ -1122,41 +1059,25 @@
         }
       }
     },
-    "addPost": {
-      "type": "object",
-      "properties": {
-        "content": {
-          "type": "string",
-          "example": "The post is created by Sihle"
-        },
-        "photo": {
-          "type": "string",
-          "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
-        }
-      },
-      "required": [
-        "content"
-      ]
-    },
-    "addPostSuccess": {
+    "newPostSchema": {
       "type": "object",
       "properties": {
         "status": {
-          "type": "string",
-          "example": "success"
+          "type": "boolean",
+          "example": true
         },
-        "data": {
+        "post": {
           "type": "object",
           "properties": {
             "user": {
               "type": "string",
-              "example": "62b6d7a2e125d7b3aa0ea7db"
+              "example": "62bbaacc9e32281c5465543a"
             },
             "content": {
               "type": "string",
               "example": "The post is created by Sihle"
             },
-            "photo": {
+            "imageUrl": {
               "type": "string",
               "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
             },
@@ -1167,24 +1088,24 @@
             },
             "_id": {
               "type": "string",
-              "example": "62b7ec2a4cd2c43695d3cacf"
+              "example": "62be663230cbd1503221a0aa"
             },
             "createdAt": {
               "type": "string",
-              "example": "2022-06-26T05:18:34.915Z"
+              "example": "2022-07-01T03:12:50.104Z"
             }
           }
         }
       }
     },
-    "addLikeSuccess": {
+    "likePostSchema": {
       "type": "object",
       "properties": {
         "status": {
-          "type": "string",
-          "example": "success"
+          "type": "boolean",
+          "example": true
         },
-        "data": {
+        "post": {
           "type": "object",
           "properties": {
             "_id": {
@@ -1220,15 +1141,12 @@
         }
       }
     },
-    "unlikeSuccess": {
-      "$ref": "#/definitions/addLikeSuccess"
-    },
-    "addCommentSuccess": {
+    "commentSchema": {
       "type": "object",
       "properties": {
         "status": {
-          "type": "string",
-          "example": "success"
+          "type": "boolean",
+          "example": true
         },
         "data": {
           "type": "object",
@@ -1252,92 +1170,6 @@
             "createdAt": {
               "type": "string",
               "example": "2022-06-26T05:38:34.115Z"
-            }
-          }
-        }
-      }
-    },
-    "getPersonalPostsSuccess": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "type": "string",
-          "example": "success"
-        },
-        "data": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "_id": {
-                "type": "string",
-                "example": "62b7ec2a4cd2c43695d3cacf"
-              },
-              "user": {
-                "type": "string",
-                "example": "62b6d7a2e125d7b3aa0ea7db"
-              },
-              "content": {
-                "type": "string",
-                "example": "The post is created by Sihle"
-              },
-              "photo": {
-                "type": "string",
-                "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
-              },
-              "likes": {
-                "type": "array",
-                "example": [],
-                "items": {}
-              },
-              "createdAt": {
-                "type": "string",
-                "example": "2022-06-26T05:18:34.915Z"
-              },
-              "comments": {
-                "type": "array",
-                "example": [],
-                "items": {}
-              }
-            }
-          }
-        }
-      }
-    },
-    "editPostSuccess": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "type": "string",
-          "example": "success"
-        },
-        "data": {
-          "type": "object",
-          "properties": {
-            "_id": {
-              "type": "string",
-              "example": "62b7f41beaf61b673bdd3b70"
-            },
-            "user": {
-              "type": "string",
-              "example": "62b6d7a2e125d7b3aa0ea7db"
-            },
-            "content": {
-              "type": "string",
-              "example": "修改過的貼文！"
-            },
-            "photo": {
-              "type": "string",
-              "example": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
-            },
-            "likes": {
-              "type": "array",
-              "example": [],
-              "items": {}
-            },
-            "createdAt": {
-              "type": "string",
-              "example": "2022-06-26T05:52:27.804Z"
             }
           }
         }
