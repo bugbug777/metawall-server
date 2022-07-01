@@ -1,14 +1,12 @@
 const swaggerAutogen = require("swagger-autogen")();
 
-// host: "https://enigmatic-thicket-59722.herokuapp.com",
-// schemes: ["https", "http"],
 const doc = {
   info: {
     title: "Metawall",
     description: "Metawall RESTful API Docs.",
   },
-  host: "localhost:3000",
-  schemes: ["http"],
+  host: "enigmatic-thicket-59722.herokuapp.com",
+  schemes: ["https", "http"],
   securityDefinitions: {
     apiKeyAuth: {
       type: "apiKey",
