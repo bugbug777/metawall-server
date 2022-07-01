@@ -85,9 +85,13 @@ app.use((err, req, res, next) => {
       err.message = 'JWT 過期，請重新登入！';
       err.isOperational = true;
     }
+    if (err.name === 'MulterError') {
+      err.message = '資料格式欄位錯誤或檔案過大、圖片格式錯誤！';
+      err.isOperational = true;
+    }
     if (err.isOperational) {
       res.status(400).json({
-        status: 'false',
+        status: false,
         message: err.message
       })
     } else {
