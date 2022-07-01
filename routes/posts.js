@@ -13,7 +13,7 @@ router.get(
     #swagger.description = '取得所有貼文'
     #swagger.responses[200] = {
       description: '成功回傳！',
-      schema: { $ref: '#/definitions/getPosts' }
+      schema: { $ref: '#/definitions/postsSchema' }
     }
   */
 );
@@ -31,7 +31,7 @@ router.get(
     }
     #swagger.responses[200] = {
       description: '成功回傳！',
-      schema: { $ref: '#/definitions/getPost' }
+      schema: { $ref: '#/definitions/postSchema' }
     }
   */
 );
@@ -46,11 +46,11 @@ router.post(
       in: 'body',
       description: '資料格式',
       required: true,
-      schema: { $ref: '#/definitions/addPost' }
+      schema: { $ref: '#/definitions/postParams' }
     }
     #swagger.responses[200] = {
       description: '新增成功！',
-      schema: { $ref: '#/definitions/addPostSuccess' }
+      schema: { $ref: '#/definitions/newPostSchema' }
     }
   */
 );
@@ -66,12 +66,12 @@ router.patch(
       description: '資料格式',
       required: true,
       schema: {
-        $content: "修改過的貼文！"
+        $content: "The post is created by Sihle"
       }
     }
     #swagger.responses[200] = {
       description: '修改成功！',
-      schema: { $ref: '#/definitions/editPostSuccess' }
+      schema: { $ref: '#/definitions/newPostSchema' }
     }
   */
 );
@@ -85,14 +85,9 @@ router.post(
     #swagger.tags = ['Posts - 貼文按讚、留言']
     #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.description = '新增貼文按讚'
-    #swagger.parameters['id'] = {
-      in: 'path',
-      description: '貼文 ID',
-      required: true,
-    }
     #swagger.responses[200] = {
       description: '成功按讚！',
-      schema: { $ref: '#/definitions/addLikeSuccess' }
+      schema: { $ref: '#/definitions/likePostSchema' }
     }
   */
 );
@@ -104,14 +99,9 @@ router.delete(
     #swagger.tags = ['Posts - 貼文按讚、留言']
     #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.description = '移除貼文按讚'
-    #swagger.parameters['id'] = {
-      in: 'path',
-      description: '貼文 ID',
-      required: true,
-    }
     #swagger.responses[200] = {
       description: '成功取消按讚！',
-      schema: { $ref: '#/definitions/unlikeSuccess' }
+      schema: { $ref: '#/definitions/likePostSchema' }
     }
   */
 );
@@ -130,7 +120,7 @@ router.get(
     }
     #swagger.responses[200] = {
       description: '新增成功！',
-      schema: { $ref: '#/definitions/getPersonalPostsSuccess' }
+      schema: { $ref: '#/definitions/postSchema' }
     }
   */
 );
@@ -150,7 +140,7 @@ router.post(
     }
     #swagger.responses[200] = {
       description: '新增成功！',
-      schema: { $ref: '#/definitions/addCommentSuccess' }
+      schema: { $ref: '#/definitions/commentSchema' }
     }
   */
 );
@@ -167,8 +157,8 @@ router.delete(
     #swagger.responses[200] = {
       description: '新增成功！',
       schema: {
-        status: 'success',
-        data: []
+        status: true,
+        posts: []
       }
     }
   */

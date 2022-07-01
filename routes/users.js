@@ -15,7 +15,7 @@ router.get(
     #swagger.description = '檢查登入狀態'
     #swagger.responses[200] = {
       description: '授權驗證成功！',
-      schema: { $ref: '#/definitions/getFollowingList' }
+      schema: { $ref: '#/definitions/userSchema' }
     }
   */
 );
@@ -29,11 +29,11 @@ router.post(
       in: 'body',
       description: '資料格式',
       required: true,
-      schema: { $ref: '#/definitions/addUser' }
+      schema: { $ref: '#/definitions/registerParams' }
     }
     #swagger.responses[200] = {
       description: '新增成功！',
-      schema: { $ref: '#/definitions/registerSuccess' }
+      schema: { $ref: '#/definitions/userTokenSchema' }
     }
   */
 );
@@ -46,11 +46,11 @@ router.post(
       in: 'body',
       description: '資料格式',
       required: true,
-      schema: { $ref: '#/definitions/userLogin' }
+      schema: { $ref: '#/definitions/signinParams' }
     }
     #swagger.responses[200] = {
       description: '登入成功！',
-      schema: { $ref: '#/definitions/loginSuccess' }
+      schema: { $ref: '#/definitions/userTokenSchema' }
     }
   */
 );
@@ -63,7 +63,7 @@ router.get(
     #swagger.description = '取得登入會員個人資料'
     #swagger.responses[200] = {
       description: '成功回傳！',
-      schema: { $ref: '#/definitions/authSuccess' }
+      schema: { $ref: '#/definitions/profileSchema' }
     }
   */
 );
@@ -76,7 +76,7 @@ router.get(
     #swagger.description = '取得使用者個人資料'
     #swagger.responses[200] = {
       description: '成功回傳！',
-      schema: { $ref: '#/definitions/authSuccess' }
+      schema: { $ref: '#/definitions/profileResponse' }
     }
   */
 );
@@ -91,11 +91,11 @@ router.patch(
       in: 'body',
       description: '資料格式',
       required: true,
-      schema: { $ref: '#/definitions/updateProfile' }
+      schema: { $ref: '#/definitions/updateProfileParams' }
     }
     #swagger.responses[200] = {
       description: '更新成功！',
-      schema: { $ref: '#/definitions/updateProfileSuccess' }
+      schema: { $ref: '#/definitions/profileSchema' }
     }
   */
 );
@@ -110,11 +110,11 @@ router.post(
       in: 'body',
       description: '資料格式',
       required: true,
-      schema: { $ref: '#/definitions/updatePassword' }
+      schema: { $ref: '#/definitions/updatePasswordParams' }
     }
     #swagger.responses[200] = {
       description: '更新成功！',
-      schema: { $ref: '#/definitions/updatePasswordSuccess' }
+      schema: { $ref: '#/definitions/userTokenSchema' }
     }
   */
 );
@@ -130,7 +130,7 @@ router.get(
     #swagger.description = '追蹤好友'
     #swagger.responses[200] = {
       description: '成功取得按讚列表！',
-      schema: { $ref: '#/definitions/getLikeList' }
+      schema: { $ref: '#/definitions/postsSchema' }
     }
   */
 );
@@ -144,7 +144,7 @@ router.get(
     #swagger.description = '追蹤好友'
     #swagger.responses[200] = {
       description: '成功取得追蹤列表！',
-      schema: { $ref: '#/definitions/getFollowingList' }
+      schema: { $ref: '#/definitions/followingUsersSchema' }
     }
   */
 );
@@ -156,15 +156,10 @@ router.post(
     #swagger.security = [{ 'apiKeyAuth': [] }]
     #swagger.tags = ['Users - 好友按讚、追蹤']
     #swagger.description = '追蹤好友'
-    #swagger.parameters['id'] = {
-      in: 'path',
-      description: '使用者 ID',
-      required: true,
-    }
     #swagger.responses[200] = {
       description: '成功追蹤！',
       schema: {
-        "status": "success",
+        "status": true,
         "data": {
             "message": "成功追蹤！"
         }
@@ -183,7 +178,7 @@ router.delete(
     #swagger.responses[200] = {
       description: '成功取消追蹤！',
       schema: {
-        "status": "success",
+        "status": true,
         "data": {
             "message": "成功取消追蹤！"
         }
@@ -204,7 +199,7 @@ router.get(
     #swagger.description = '取得所有使用者'
     #swagger.responses[200] = {
       description: '成功取得所有使用者！',
-      schema: { $ref: '#/definitions/getUsers' }
+      schema: { $ref: '#/definitions/usersSchema' }
     }
   */
 );
@@ -216,10 +211,10 @@ router.delete(
     #swagger.tags = ['Users - 後台會員管理']
     #swagger.description = '刪除所有使用者'
     #swagger.responses[200] = {
-      description: '成功取得所有使用者！',
+      description: '成功刪除所有使用者！',
       schema: {
-        status: 'success',
-        data: []
+        status: true,
+        users: []
       }
     }
   */

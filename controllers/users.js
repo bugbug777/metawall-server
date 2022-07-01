@@ -4,23 +4,30 @@ const User = require("../models/UserModel");
 const Post = require("../models/PostModel");
 const appError = require("../service/appError");
 const asyncErrorHandler = require("../service/asyncErrorHandler");
-const successHandler = require("../service/successHandler");
 const { generateToken, verifyToken } = require("../service/auth");
 
 //////
-//  輔助測試
+//  後台管理
 ////
 
 // 取得所有使用者
 const getUsers = asyncErrorHandler(async (req, res, next) => {
   const users = await User.find();
-  successHandler(res, users);
+
+  res.json({
+    status: true,
+    users
+  });
 });
 
 // 刪除所有使用者
 const deleteUsers = asyncErrorHandler(async (req, res, next) => {
   await User.deleteMany({});
-  successHandler(res, []);
+  
+  res.json({
+    status: true,
+    users: []
+  })
 });
 
 //////

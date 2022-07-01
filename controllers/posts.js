@@ -1,7 +1,6 @@
 const Post = require("../models/PostModel");
 const User = require("../models/UserModel");
 const Comment = require("../models/CommentModel"); // 沒匯入，還會不給用的
-const successHandler = require("../service/successHandler");
 const appError = require("../service/appError");
 const asyncErrorHandler = require("../service/asyncErrorHandler");
 
@@ -137,7 +136,7 @@ const getPersonalPosts = asyncErrorHandler(async (req, res, next) => {
 });
 
 //////
-//  輔助測試
+//  後台管理
 ////
 
 // 編輯單筆貼文
@@ -157,13 +156,20 @@ const editPost = asyncErrorHandler(async (req, res, next) => {
     { new: true }
   );
 
-  successHandler(res, editedPost);
+  res.json({
+    status: true,
+    post: editPost
+  });
 });
 
 // 刪除所有貼文
 const deletePosts = asyncErrorHandler(async (req, res) => {
   await Post.deleteMany({});
-  successHandler(res, []);
+
+  res.json({
+    status: true,
+    posts: []
+  });
 });
 
 module.exports = {
