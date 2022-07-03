@@ -50,8 +50,6 @@ const signUp = asyncErrorHandler(async (req, res, next) => {
 
   if (!name || !email || !password)
     return appError(400, "欄位資訊不能為空！", next);
-  if (!validator.isAlphanumeric(name))
-    return appError(400, "名稱只能是英數字的組合！", next);
   if (!validator.isLength(name, { min: 2 }))
     return appError(400, "使用者暱稱長度必須為 2 個字元以上！", next);
   if (!validator.isEmail(email))
