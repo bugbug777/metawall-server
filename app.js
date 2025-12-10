@@ -11,7 +11,7 @@ var postsRouter = require('./routes/posts');
 var uploadRouter = require('./routes/upload');
 
 require('./connections/mongoose');
-require('./connections/passport');
+// require('./connections/passport');
 
 
 var app = express();

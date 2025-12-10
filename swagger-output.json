@@ -631,8 +631,8 @@
               "type": "object",
               "properties": {
                 "status": {
-                  "type": "string",
-                  "example": "success"
+                  "type": "boolean",
+                  "example": true
                 },
                 "data": {
                   "type": "string",
